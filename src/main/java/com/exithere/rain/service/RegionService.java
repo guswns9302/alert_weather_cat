@@ -1,13 +1,15 @@
 package com.exithere.rain.service;
 
+import com.exithere.rain.dto.response.RegionResponse;
 import com.exithere.rain.entity.Region;
 import com.exithere.rain.exception.CustomException;
 import com.exithere.rain.exception.ErrorCode;
 import com.exithere.rain.repository.RegionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,5 +38,11 @@ public class RegionService {
 
             regionRepository.save(region);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Region> getListRegion(){
+        List<Region> regionList = regionRepository.findAll();
+        return regionList;
     }
 }

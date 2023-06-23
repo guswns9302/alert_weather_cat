@@ -10,13 +10,13 @@ spring:
       on-profile: "dev"
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       #format_sql: true
     open-in-view: false
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/exit_here
+    url: jdbc:postgresql://localhost:5432/rain_dev
     username: yunhyunjun
     password:
     connection-timeout: 3000
