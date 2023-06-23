@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+      #format_sql: true
+    open-in-view: false
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: [ YOUR DATASOURCE URL ]
+    username: [ USER ]
+    password: [ PASSWORD ]
+    connection-timeout: 3000
+    maximum-pool-size: 50
+    minimum-idle: 10
+    idle-timeout: 60000

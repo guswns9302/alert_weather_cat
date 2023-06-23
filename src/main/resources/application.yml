@@ -1,0 +1,57 @@
+spring:
+  profiles:
+    group:
+      "dev": "dev, common"
+      "prod": "prod, common, awsPostgres"
+---
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+  jpa:
+    hibernate:
+      ddl-auto: create
+      #format_sql: true
+    open-in-view: false
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/exit_here
+    username: yunhyunjun
+    password:
+    connection-timeout: 3000
+    maximum-pool-size: 50
+    minimum-idle: 10
+    idle-timeout: 60000
+
+logging:
+  level:
+    root: info
+    com.exithere.rain: debug
+    org.springframework: info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+logging:
+  level:
+    root: info
+    com.exithere.rain: debug
+    org.springframework: info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "common"
+
+server:
+  port: 8888
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    use-root-path: true
