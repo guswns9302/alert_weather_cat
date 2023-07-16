@@ -19,6 +19,9 @@ public enum ErrorCode {
     /* 404 NOT_FOUND : Resource 를 찾을 수 없음 */
     DEVICE_NOT_FOUND(HttpStatus.NOT_FOUND, "디바이스 정보를 찾을 수 없습니다."),
 
+    /* 404 NOT_FOUND : REGION 정보를 찾을 수 없음 */
+    REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "지역 설정 정보를 찾을 수 없습니다."),
+
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌, 중복된 데이터 문제 */
     DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "데이터가 이미 존재합니다."),
 
@@ -27,6 +30,9 @@ public enum ErrorCode {
 
     /* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에 오류가 발생했습니다."),
+
+    /* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
+    OPEN_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출에 오류가 발생했습니다."),
     ;
 
     private final HttpStatus httpStatus;

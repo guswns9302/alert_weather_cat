@@ -164,4 +164,29 @@ public class DeviceService {
             throw new CustomException(ErrorCode.DEVICE_NOT_FOUND);
         }
     }
+
+    @Transactional
+    public RegionListResponse deleteRegion(DeviceRegionRequest deviceRegionRequest) {
+        Optional<Device> existDeviceId = this.findDeviceByDeviceId(deviceRegionRequest.getDeviceId());
+
+        if(existDeviceId.isPresent()){
+            if(deviceRegionRequest.getRegionName().equals(existDeviceId.get().getFirstRegionCd().getRegionName())){
+                existDeviceId.get().deleteRegion(1);
+            }
+            else if(deviceRegionRequest.getRegionName().equals(existDeviceId.get().getSecondRegionCd().getRegionName())){
+                existDeviceId.get().deleteRegion(2);
+            }
+            else if(deviceRegionRequest.getRegionName().equals(existDeviceId.get().getThirdRegionCd().getRegionName())){
+                existDeviceId.get().deleteRegion(3);
+            }
+            else{
+                throw new CustomException(ErrorCode.REGION_NOT_FOUND);
+            }
+
+            return RegionListResponse.from(existDeviceId.get());
+        }
+        else{
+            throw new CustomException(ErrorCode.DEVICE_NOT_FOUND);
+        }
+    }
 }

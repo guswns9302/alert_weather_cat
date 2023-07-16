@@ -88,4 +88,9 @@ public class DeviceController {
         return ResponseEntity.ok(deviceService.updateSelectRegion(deviceRegionRequest));
     }
 
+    @DeleteMapping("/region")
+    public ResponseEntity<RegionListResponse> deleteRegion(@RequestBody DeviceRegionRequest deviceRegionRequest){
+        return ResponseEntity.ok(deviceService.deleteRegion(deviceRegionRequest));
+    }
+
 }

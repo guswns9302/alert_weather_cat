@@ -22,7 +22,7 @@ public class DeviceTotalResponse {
     private ArrayList<Region> regionList;
     private boolean pushBtn;
     private boolean specialReport;
-    private Alarm alarm;
+    private AlarmResponse alarmResponse;
 
     public static DeviceTotalResponse from(Device device){
         ArrayList<Region> regions = new ArrayList<>();
@@ -42,7 +42,7 @@ public class DeviceTotalResponse {
                 .selectRegion(device.getSelectRegionCd())
                 .regionList(regions)
                 .pushBtn(device.isPushBtn())
-                .alarm(device.getAlarm())
+                .alarmResponse(AlarmResponse.from(device.getAlarm()))
                 .specialReport(device.isSpecialReport())
                 .build();
     }

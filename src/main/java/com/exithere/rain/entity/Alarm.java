@@ -7,6 +7,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 @Getter
 @Builder
@@ -66,19 +68,47 @@ public class Alarm {
     private boolean dust;
 
     public void updateAll(AlarmRequest alarmRequest){
-        this.targetDay = TargetDay.valueOf(alarmRequest.getTargetDay());
+        this.mon = false;
+        this.tue = false;
+        this.wed = false;
+        this.thu = false;
+        this.fri = false;
+        this.sat = false;
+        this.sun = false;
+
+        this.targetDay = TargetDay.find(alarmRequest.getTargetDay());
         this.targetTime = alarmRequest.getTargetTime();
-        this.mon = alarmRequest.isMon();
-        this.tue = alarmRequest.isTue();
-        this.wed = alarmRequest.isWed();
-        this.thu = alarmRequest.isThu();
-        this.fri = alarmRequest.isFri();
-        this.sat = alarmRequest.isSat();
-        this.sun = alarmRequest.isSun();
+
+        for(int index : alarmRequest.getTargetDate()){
+            switch (index){
+                case 0:
+                    this.sun = true;
+                    break;
+                case 1:
+                    this.mon = true;
+                    break;
+                case 2:
+                    this.tue = true;
+                    break;
+                case 3:
+                    this.wed = true;
+                    break;
+                case 4:
+                    this.thu = true;
+                    break;
+                case 5:
+                    this.fri = true;
+                    break;
+                case 6:
+                    this.sat = true;
+                    break;
+            }
+        }
+
         this.summary = alarmRequest.isSummery();
         this.special = alarmRequest.isSpecial();
         this.rainFall = alarmRequest.isRainFall();
-        this.ratio = Ratio.valueOf(alarmRequest.getRatio());
+        this.ratio = Ratio.find(alarmRequest.getRatio());
         this.dust = alarmRequest.isDust();
     }
 }

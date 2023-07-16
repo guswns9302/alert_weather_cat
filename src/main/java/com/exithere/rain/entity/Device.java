@@ -90,4 +90,35 @@ public class Device {
     public void updateSelectRegion(Region region){
         this.selectRegionCd = region;
     }
+
+    public void deleteRegion(int select){
+        if(select == 1){
+            // 첫번째 삭제 -> 두번재 , 세번째가 있는지 확인
+            if(this.secondRegionCd != null){
+                this.firstRegionCd = this.secondRegionCd;
+
+                if(this.thirdRegionCd != null){
+                    this.secondRegionCd = this.thirdRegionCd;
+                    this.thirdRegionCd = null;
+                }
+                else{
+                    this.secondRegionCd = null;
+                }
+            }
+        }
+
+        if(select == 2){
+            if(this.thirdRegionCd != null){
+                this.secondRegionCd = this.thirdRegionCd;
+                this.thirdRegionCd = null;
+            }
+            else{
+                this.secondRegionCd = null;
+            }
+        }
+
+        if(select == 3){
+            this.thirdRegionCd = null;
+        }
+    }
 }
