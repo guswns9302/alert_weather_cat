@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -50,5 +50,15 @@ public enum PopRegionIdEnum implements Serializable {
         else{
             throw new CustomException(ErrorCode.INVALID_PARAMETER);
         }
+    }
+
+    public static Set<String> get(){
+        Set<String> popEnumList = new HashSet<>();
+
+        for(PopRegionIdEnum popRegionIdEnum : values()){
+            popEnumList.add(popRegionIdEnum.getRegionCode());
+        }
+
+        return popEnumList;
     }
 }

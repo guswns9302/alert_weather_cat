@@ -22,6 +22,12 @@ public enum ErrorCode {
     /* 404 NOT_FOUND : REGION 정보를 찾을 수 없음 */
     REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "지역 설정 정보를 찾을 수 없습니다."),
 
+    /* 404 NOT_FOUND : 주간 POP 예보 정보를 찾을 수 없음 */
+    WEEK_POP_FORECAST_NOT_FOUND(HttpStatus.NOT_FOUND, "주간 POP 예보 정보를 찾을 수 없습니다."),
+
+    /* 404 NOT_FOUND : 주간 예보 정보를 찾을 수 없음 */
+    WEEK_FORECAST_NOT_FOUND(HttpStatus.NOT_FOUND, "주간 예보 정보를 찾을 수 없습니다."),
+
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌, 중복된 데이터 문제 */
     DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "데이터가 이미 존재합니다."),
 

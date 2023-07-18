@@ -15,7 +15,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class RainApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(RainApplication.class, args);
+
     }
 
 }
