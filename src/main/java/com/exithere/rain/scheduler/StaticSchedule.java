@@ -4,6 +4,7 @@ import com.exithere.rain.dto.response.forecast.pop.PopRegionIdEnum;
 import com.exithere.rain.dto.response.forecast.week.RegionIdEnum;
 import com.exithere.rain.entity.WeekPopForecast;
 import com.exithere.rain.service.DustForecastService;
+import com.exithere.rain.service.FcmMessageService;
 import com.exithere.rain.service.WeekForecastService;
 import com.exithere.rain.service.WeekPopForecastService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class StaticSchedule {
     private final DustForecastService dustForecastService;
     private final WeekForecastService weekForecastService;
     private final WeekPopForecastService weekPopForecastService;
+    private final FcmMessageService fcmMessageService;
 
     // 미먼(pm10) 초미먼(pm25) 주간 예보 - 매일 1회, 17시 30분 19개 권역
     @Async
@@ -82,5 +84,12 @@ public class StaticSchedule {
         weekPopForecastService.requestWeekPopForecast(baseTime);
     }
 
+    @Async
+    @Scheduled(cron = "0 0/1 * * * *")
+    public void sendAlarm(){
+
+        fcmMessageService.findDevice();
+
+    }
 
 }

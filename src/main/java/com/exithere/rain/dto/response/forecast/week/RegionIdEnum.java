@@ -194,8 +194,6 @@ public enum RegionIdEnum implements Serializable {
     public static String find(String name){
         Optional<RegionIdEnum> findIndex = Arrays.stream(values()).filter(value -> name.contains(value.regionName)).findAny();
         if(findIndex.isPresent()){
-            System.out.println(findIndex.get().getRegionName());
-            System.out.println(findIndex.get().getRegionCode());
             return findIndex.get().getRegionCode();
         }
         else{

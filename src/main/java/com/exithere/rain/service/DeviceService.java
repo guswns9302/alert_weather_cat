@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -188,5 +189,10 @@ public class DeviceService {
         else{
             throw new CustomException(ErrorCode.DEVICE_NOT_FOUND);
         }
+    }
+
+    @Transactional
+    public List<Device> getAllDevice(){
+        return deviceRepository.findAll();
     }
 }

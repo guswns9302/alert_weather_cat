@@ -391,7 +391,6 @@ public class FcstService {
     }
 
     private Map<String, String> getBaseDateTime(LocalDateTime ldt){
-        //LocalTime baseTIme_2 = LocalTime.of(2,10);
         LocalTime baseTIme_5 = LocalTime.of(5,10);
         LocalTime baseTIme_8 = LocalTime.of(8,10);
         LocalTime baseTIme_11 = LocalTime.of(11,10);
