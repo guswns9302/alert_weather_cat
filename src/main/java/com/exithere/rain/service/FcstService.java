@@ -459,4 +459,20 @@ public class FcstService {
 
         return Map.of("baseDate", baseDate, "baseTime", baseTime);
     }
+
+    @Transactional
+    public void deleteData(){
+        LocalDate now = LocalDate.now();
+        // 1일 전
+        LocalDate now_before4 = now.minusDays(1);
+
+        // 1일 전의 1주 전
+        LocalDate now_before4_week = now_before4.minusWeeks(1);
+
+        log.info("OLD FORECAST DATA DELETE -- from : {} | to : {}", now_before4_week, now_before4);
+
+        List<ShortForecast> oldData = shortForecastRepository.findAllByForecastDateTimeBetweenOrderByForecastDateTimeAsc(LocalDateTime.of(now_before4_week, LocalTime.of(0,0,0)), LocalDateTime.of(now_before4, LocalTime.of(23,59,59)));
+
+        shortForecastRepository.deleteAll(oldData);
+    }
 }

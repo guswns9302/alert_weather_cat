@@ -3,10 +3,7 @@ package com.exithere.rain.scheduler;
 import com.exithere.rain.dto.response.forecast.pop.PopRegionIdEnum;
 import com.exithere.rain.dto.response.forecast.week.RegionIdEnum;
 import com.exithere.rain.entity.WeekPopForecast;
-import com.exithere.rain.service.DustForecastService;
-import com.exithere.rain.service.FcmMessageService;
-import com.exithere.rain.service.WeekForecastService;
-import com.exithere.rain.service.WeekPopForecastService;
+import com.exithere.rain.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -25,6 +22,7 @@ import java.util.List;
 @Slf4j
 public class StaticSchedule {
 
+    private final FcstService fcstService;
     private final DustForecastService dustForecastService;
     private final WeekForecastService weekForecastService;
     private final WeekPopForecastService weekPopForecastService;
@@ -47,14 +45,6 @@ public class StaticSchedule {
     }
 
     @Async
-    @Scheduled(cron = "0 0 11 * * *")
-    public void week11(){
-        String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(6,00).format(DateTimeFormatter.ofPattern("HHmm"));
-        weekForecastService.requestWeekForecast(baseTime);
-
-    }
-
-    @Async
     @Scheduled(cron = "0 10 18 * * *")
     public void week18(){
         String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(18,00).format(DateTimeFormatter.ofPattern("HHmm"));
@@ -71,25 +61,40 @@ public class StaticSchedule {
     }
 
     @Async
-    @Scheduled(cron = "0 0 11 * * *")
-    public void weekPop11(){
-        String baseTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(6,0,0)).format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
-        weekPopForecastService.requestWeekPopForecast(baseTime);
-    }
-
-    @Async
     @Scheduled(cron = "0 10 18 * * *")
     public void weekPop18(){
         String baseTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(18,0,0)).format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
         weekPopForecastService.requestWeekPopForecast(baseTime);
     }
 
+    // push
     @Async
     @Scheduled(cron = "0 0/1 * * * *")
     public void sendAlarm(){
-
         fcmMessageService.findDevice();
+    }
 
+    // old data delete
+    @Async
+    @Scheduled(cron = "0 59 23 * * SUN")
+    public void deleteDB(){
+        fcstService.deleteData();
+    }
+
+    // 로컬 테스트
+    @Async
+    @Scheduled(cron = "0 19 13 * * *")
+    public void week11(){
+        String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(6,00).format(DateTimeFormatter.ofPattern("HHmm"));
+        weekForecastService.requestWeekForecast(baseTime);
+
+    }
+
+    @Async
+    @Scheduled(cron = "0 19 13 * * *")
+    public void weekPop11(){
+        String baseTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(6,0,0)).format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+        weekPopForecastService.requestWeekPopForecast(baseTime);
     }
 
 }

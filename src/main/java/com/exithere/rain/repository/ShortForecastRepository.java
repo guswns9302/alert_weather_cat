@@ -13,4 +13,7 @@ public interface ShortForecastRepository extends JpaRepository<ShortForecast, Lo
     Optional<ShortForecast> findByRegion_RegionIdAndForecastDateTime(Long regionId, LocalDateTime localDateTime);
 
     List<ShortForecast> findByRegion_RegionIdAndForecastDateTimeBetweenOrderByForecastDateTimeAsc(Long regionId, LocalDateTime fromLDT, LocalDateTime toLDT);
+
+    List<ShortForecast> findAllByForecastDateTimeBetweenOrderByForecastDateTimeAsc(LocalDateTime fromLDT, LocalDateTime toLDT);
+
 }
