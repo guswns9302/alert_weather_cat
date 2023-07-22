@@ -43,11 +43,11 @@ public class DustForecastService {
             return Map.of("findDust", "정보 없음", "ultraFineDust", "정보 없음");
         }
         else{
-            if(regionName.contains("서울특별시")){
+            if(regionName.contains("서울")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getSeoul();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getSeoul();
             }
-            else if(regionName.contains("인천광역시")){
+            else if(regionName.contains("인천")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getIncheon();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getIncheon();
             }
@@ -55,7 +55,7 @@ public class DustForecastService {
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getJeju();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getJeju();
             }
-            else if(regionName.contains("대전광역시")){
+            else if(regionName.contains("대전")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getDaejeon();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getDaejeon();
             }
@@ -63,50 +63,50 @@ public class DustForecastService {
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getSejong();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getSejong();
             }
-            else if(regionName.contains("광주광역시")){
+            else if(regionName.contains("광주 ")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getGwangju();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getGwangju();
             }
-            else if(regionName.contains("대구광역시")){
+            else if(regionName.contains("대구")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getDaeku();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getDaeku();
             }
-            else if(regionName.contains("울산광역시")){
+            else if(regionName.contains("울산")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getUlsan();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getUlsan();
             }
-            else if(regionName.contains("부산광역시")){
+            else if(regionName.contains("부산")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getBusan();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getBusan();
             }
-            else if(regionName.contains("전라남도")){
+            else if(regionName.contains("전남")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getJn();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getJn();
             }
-            else if(regionName.contains("전라북도")){
+            else if(regionName.contains("전북")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getJb();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getJb();
             }
-            else if(regionName.contains("경상남도")){
+            else if(regionName.contains("경남")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getKn();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getKn();
             }
-            else if(regionName.contains("경상북도")){
+            else if(regionName.contains("경북")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getKb();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getKb();
             }
-            else if(regionName.contains("충청남도")){
+            else if(regionName.contains("충남")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getChn();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getChn();
             }
-            else if(regionName.contains("충청북도")){
+            else if(regionName.contains("충북")){
                 regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getChb();
                 regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getChb();
             }
-            else if(regionName.contains("강원도")){
-                if(regionName.contains("강원도 강릉시") || regionName.contains("강원도 동해시") || regionName.contains("강원도 속초시")
-                        || regionName.contains("강원도 삼청시") || regionName.contains("강원도 태백시") || regionName.contains("강원도 고성군")
-                        || regionName.contains("강원도 양양군")){
+            else if(regionName.contains("강원특별자치도")){
+                if(regionName.contains("강릉시") || regionName.contains("동해시") || regionName.contains("속초시")
+                        || regionName.contains("삼청시") || regionName.contains("태백시") || regionName.contains("고성군")
+                        || regionName.contains("양양군")){
                     regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getYd();
                     regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getYd();
                 }
@@ -115,12 +115,12 @@ public class DustForecastService {
                     regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getYs();
                 }
             }
-            else if(regionName.contains("경기도")){
+            else if(regionName.contains("경기")){
                 // 경기 북부
-                if(regionName.contains("경기도 고양시") || regionName.contains("경기도 구리시") || regionName.contains("경기도 남양주시")
-                        || regionName.contains("경기도 동두천시") || regionName.contains("경기도 양주시") || regionName.contains("경기도 의정부시")
-                        || regionName.contains("경기도 파주시") || regionName.contains("경기도 포천시") || regionName.contains("경기도 가평군")
-                        || regionName.contains("경기도 연천군") || regionName.contains("경기도 김포시")){
+                if(regionName.contains("경기 고양시") || regionName.contains("경기 구리시") || regionName.contains("경기 남양주시")
+                        || regionName.contains("경기 동두천시") || regionName.contains("경기 양주시") || regionName.contains("경기 의정부시")
+                        || regionName.contains("경기 파주시") || regionName.contains("경기 포천시") || regionName.contains("경기 가평군")
+                        || regionName.contains("경기 연천군") || regionName.contains("경기 김포시")){
                     regionDust = dustList.stream().filter(i -> i.getDustType().equals("PM10")).findFirst().get().getGb();
                     regionUltraDust = dustList.stream().filter(i -> i.getDustType().equals("PM25")).findFirst().get().getGb();
                 }

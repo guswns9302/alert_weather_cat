@@ -10,15 +10,15 @@ spring:
       on-profile: "dev"
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       #format_sql: true
     open-in-view: false
 
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/rain_dev
-    username: postgres
-    password: wldhel11
+    username: yunhyunjun
+    password:
     connection-timeout: 3000
     maximum-pool-size: 50
     minimum-idle: 10

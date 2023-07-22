@@ -12,7 +12,7 @@ public class DeviceJoinRequest {
     private String deviceId;
     private String fcmToken;
     private String regionName;
-    private int regionX;
-    private int regionY;
+    private double regionX;
+    private double regionY;
 
 }
