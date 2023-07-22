@@ -11,6 +11,6 @@ import lombok.*;
 public class DeviceRegionRequest {
     private String deviceId;
     private String regionName;
-    private int regionX;
-    private int regionY;
+    private double regionX;
+    private double regionY;
 }
