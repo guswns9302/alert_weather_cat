@@ -78,4 +78,15 @@ public class RegionService {
         double y = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
         return Map.of("x", (int) Math.round(x), "y", (int) Math.round(y));
     }
+
+    @Transactional(readOnly = true)
+    public Region findByRegionInfo(String regionName, int regionX, int regionY){
+        Optional<Region> existRegion = regionRepository.findByRegionNameAndRegionXAndRegionY(regionName, regionX, regionY);
+        if(existRegion.isEmpty()){
+            throw new CustomException(ErrorCode.REGION_NOT_FOUND);
+        }
+        else{
+            return existRegion.get();
+        }
+    }
 }
