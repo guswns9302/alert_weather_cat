@@ -10,5 +10,5 @@ import lombok.*;
 @AllArgsConstructor
 public class DeviceRegionSelectOrDeleteRequest {
     private String deviceId;
-    private int regionId;
+    private Long regionId;
 }

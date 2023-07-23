@@ -80,7 +80,7 @@ public class RegionService {
     }
 
     @Transactional(readOnly = true)
-    public Region findByRegionId(int regionId){
+    public Region findByRegionId(Long regionId){
         Optional<Region> existRegion = regionRepository.findById(regionId);
         if(existRegion.isEmpty()){
             throw new CustomException(ErrorCode.REGION_NOT_FOUND);
