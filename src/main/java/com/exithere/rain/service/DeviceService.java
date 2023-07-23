@@ -2,6 +2,7 @@ package com.exithere.rain.service;
 
 import com.exithere.rain.dto.request.DeviceJoinRequest;
 import com.exithere.rain.dto.request.DeviceRegionRequest;
+import com.exithere.rain.dto.request.DeviceRegionSelectOrDeleteRequest;
 import com.exithere.rain.dto.response.DeviceTotalResponse;
 import com.exithere.rain.dto.response.RegionListResponse;
 import com.exithere.rain.entity.Alarm;
@@ -144,10 +145,10 @@ public class DeviceService {
     }
 
     @Transactional
-    public RegionListResponse updateSelectRegion(DeviceRegionRequest deviceRegionRequest) {
-        Optional<Device> existDeviceId = this.findDeviceByDeviceId(deviceRegionRequest.getDeviceId());
+    public RegionListResponse updateSelectRegion(DeviceRegionSelectOrDeleteRequest deviceRegionSelectOrDeleteRequest) {
+        Optional<Device> existDeviceId = this.findDeviceByDeviceId(deviceRegionSelectOrDeleteRequest.getDeviceId());
         if(existDeviceId.isPresent()){
-            Region region = regionService.findRegion(deviceRegionRequest.getRegionName(), deviceRegionRequest.getRegionX(), deviceRegionRequest.getRegionY());
+            Region region = regionService.findByRegionId(deviceRegionSelectOrDeleteRequest.getRegionId());
 
             region.getRegionId();
             if(region.getRegionId() == existDeviceId.get().getFirstRegionCd().getRegionId()
@@ -167,17 +168,19 @@ public class DeviceService {
     }
 
     @Transactional
-    public RegionListResponse deleteRegion(DeviceRegionRequest deviceRegionRequest) {
-        Optional<Device> existDeviceId = this.findDeviceByDeviceId(deviceRegionRequest.getDeviceId());
+    public RegionListResponse deleteRegion(DeviceRegionSelectOrDeleteRequest deviceRegionSelectOrDeleteRequest) {
+        Optional<Device> existDeviceId = this.findDeviceByDeviceId(deviceRegionSelectOrDeleteRequest.getDeviceId());
+
+        Region region = regionService.findByRegionId(deviceRegionSelectOrDeleteRequest.getRegionId());
 
         if(existDeviceId.isPresent()){
-            if(deviceRegionRequest.getRegionName().equals(existDeviceId.get().getFirstRegionCd().getRegionName())){
+            if(region.getRegionName().equals(existDeviceId.get().getFirstRegionCd().getRegionName())){
                 existDeviceId.get().deleteRegion(1);
             }
-            else if(deviceRegionRequest.getRegionName().equals(existDeviceId.get().getSecondRegionCd().getRegionName())){
+            else if(region.getRegionName().equals(existDeviceId.get().getSecondRegionCd().getRegionName())){
                 existDeviceId.get().deleteRegion(2);
             }
-            else if(deviceRegionRequest.getRegionName().equals(existDeviceId.get().getThirdRegionCd().getRegionName())){
+            else if(region.getRegionName().equals(existDeviceId.get().getThirdRegionCd().getRegionName())){
                 existDeviceId.get().deleteRegion(3);
             }
             else{

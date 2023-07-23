@@ -2,6 +2,7 @@ package com.exithere.rain.controller;
 
 import com.exithere.rain.dto.request.DeviceJoinRequest;
 import com.exithere.rain.dto.request.DeviceRegionRequest;
+import com.exithere.rain.dto.request.DeviceRegionSelectOrDeleteRequest;
 import com.exithere.rain.dto.response.AlarmResponse;
 import com.exithere.rain.dto.response.DeviceTotalResponse;
 import com.exithere.rain.dto.response.RegionListResponse;
@@ -84,13 +85,13 @@ public class DeviceController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PutMapping("/region")
-    public ResponseEntity<RegionListResponse> selectRegion(@RequestBody DeviceRegionRequest deviceRegionRequest){
-        return ResponseEntity.ok(deviceService.updateSelectRegion(deviceRegionRequest));
+    public ResponseEntity<RegionListResponse> selectRegion(@RequestBody DeviceRegionSelectOrDeleteRequest deviceRegionSelectOrDeleteRequest){
+        return ResponseEntity.ok(deviceService.updateSelectRegion(deviceRegionSelectOrDeleteRequest));
     }
 
     @DeleteMapping("/region")
-    public ResponseEntity<RegionListResponse> deleteRegion(@RequestBody DeviceRegionRequest deviceRegionRequest){
-        return ResponseEntity.ok(deviceService.deleteRegion(deviceRegionRequest));
+    public ResponseEntity<RegionListResponse> deleteRegion(@RequestBody DeviceRegionSelectOrDeleteRequest deviceRegionSelectOrDeleteRequest){
+        return ResponseEntity.ok(deviceService.deleteRegion(deviceRegionSelectOrDeleteRequest));
     }
 
 }
