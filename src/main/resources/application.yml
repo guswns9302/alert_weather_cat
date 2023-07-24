@@ -39,7 +39,7 @@ spring:
 logging:
   level:
     root: info
-    com.exithere.rain: info
+    com.exithere.rain: debug
     org.springframework: info
 
 ---
