@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 public class RestTemplateConfig {
     private static final int  HTTP_MAX_IDLE_CONNECTION = 50; // 환경설정에서 읽어오도록 변경 필요.
     private static final long HTTP_KEEP_ALIVE_DURATION = 20;
-    private static final long HTTP_CONNECTION_TIMEOUT = 30;
-    private static final long HTTP_READ_TIMEOUT = 30;
+    private static final long HTTP_CONNECTION_TIMEOUT = 60;
+    private static final long HTTP_READ_TIMEOUT = 60;
 
     @Bean
     public RestTemplate restTemplate() {
@@ -32,7 +32,7 @@ public class RestTemplateConfig {
                 .connectionPool(pool)
                 .connectTimeout(HTTP_CONNECTION_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(HTTP_READ_TIMEOUT, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(false)
+                .retryOnConnectionFailure(true)
                 .build();
         OkHttp3ClientHttpRequestFactory factory = new OkHttp3ClientHttpRequestFactory(client);
 

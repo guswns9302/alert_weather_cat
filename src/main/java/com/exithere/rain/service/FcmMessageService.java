@@ -88,7 +88,7 @@ public class FcmMessageService {
                 .collect(Collectors.toList());
         if(!pushAlarmOnDevice.isEmpty()){
             for(TargetDto device : pushAlarmOnDevice){
-                ForecastResponse forecastResponse = fcstService.reloadFcst(device.getSelectRegion().getRegionName(), device.getSelectRegion().getRegionX(), device.getSelectRegion().getRegionY());
+                ForecastResponse forecastResponse = fcstService.reloadFcst(device.getSelectRegion().getRegionId());
                 Forecast today = forecastResponse.getWeekForecastResponse().getZero();
                 Forecast tomorrow = forecastResponse.getWeekForecastResponse().getOne();
                 // 날씨 요약 on

@@ -48,8 +48,8 @@ public class FcstService {
     private final DustForecastService dustForecastService;
 
     @Transactional
-    public ForecastResponse reloadFcst(String regionName, int regionX, int regionY) {
-        Region getRegion = regionService.findRegion(regionName, regionX, regionY);
+    public ForecastResponse reloadFcst(Long regionId) {
+        Region getRegion = regionService.findByRegionId(regionId);
 
         // db에 해당 지역의 예보 정보가 있는지 확인 없으면 기상청 api 호출해서 데이터 저장
         this.requestFcst(getRegion);
@@ -68,7 +68,7 @@ public class FcstService {
         forecastResponse.setTwentyFourHoursForecastResponseList(list_24);
 
         // 주간 날씨 조회
-        WeekForecastResponse weekForecastResponse = weekForecastService.weekForecast(regionName);
+        WeekForecastResponse weekForecastResponse = weekForecastService.weekForecast(getRegion.getRegionName());
 
         // 일 최고 최저 기온 찾기
         LocalDateTime today = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 0, 0,0);
@@ -117,7 +117,7 @@ public class FcstService {
         List<ShortForecast> ofOne = findTodayForecast.stream().filter(i -> i.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))).collect(Collectors.toList());
         List<ShortForecast> ofTwo = findTodayForecast.stream().filter(i -> i.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(2))).collect(Collectors.toList());
 
-        WeekPopForecastResponse popForWeek = weekPopForecastService.getPopForWeek(regionName);
+        WeekPopForecastResponse popForWeek = weekPopForecastService.getPopForWeek(getRegion.getRegionName());
         weekForecastResponse.getZero().setProbabilityOfPrecipitation(this.getPop(ofToday));
         weekForecastResponse.getOne().setProbabilityOfPrecipitation(this.getPop(ofOne));
         weekForecastResponse.getTwo().setProbabilityOfPrecipitation(this.getPop(ofTwo));
@@ -140,7 +140,7 @@ public class FcstService {
         forecastResponse.setWeekForecastResponse(weekForecastResponse);
 
         // 미세먼지 추가
-        Map<String, String> dustForecast = dustForecastService.getDust(regionName);
+        Map<String, String> dustForecast = dustForecastService.getDust(getRegion.getRegionName());
         forecastResponse.setFindDust(dustForecast.get("findDust"));
         forecastResponse.setUltraFineDust(dustForecast.get("ultraFineDust"));
 

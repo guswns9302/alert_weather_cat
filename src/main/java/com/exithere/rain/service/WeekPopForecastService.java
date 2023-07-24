@@ -12,6 +12,7 @@ import com.exithere.rain.exception.ErrorCode;
 import com.exithere.rain.repository.WeekPopForecastRepository;
 import com.exithere.rain.util.RestUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +32,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class WeekPopForecastService {
 
     private final WeekPopForecastRepository weekPopForecastRepository;
@@ -40,7 +42,7 @@ public class WeekPopForecastService {
     @Transactional
     public WeekPopForecastResponse getPopForWeek(String regionName) {
         String regionCode = PopRegionIdEnum.find(regionName);
-
+        log.info("주간 강수 - region name : {} / region code : {}", regionName, regionCode);
         Optional<WeekPopForecast> exist = weekPopForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now());
         if(exist.isEmpty()){
             throw new CustomException(ErrorCode.WEEK_POP_FORECAST_NOT_FOUND);

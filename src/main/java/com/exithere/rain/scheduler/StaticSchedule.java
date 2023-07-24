@@ -32,39 +32,47 @@ public class StaticSchedule {
     @Async
     @Scheduled(cron = "0 30 17 * * *")
     public void dustP(){
+        log.info("미세먼지 정보 조회 - {}", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         dustForecastService.requestDustForecast();
+        log.info("==== 미세먼지 정보 조회 종료 ====");
     }
 
     // 06시 18시 -> 주간 최고 최저 기온
     @Async
     @Scheduled(cron = "0 10 6 * * *")
     public void week06(){
+        log.info("주간 최고 최저 기온 정보 조회 06시 - {}", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(6,00).format(DateTimeFormatter.ofPattern("HHmm"));
         weekForecastService.requestWeekForecast(baseTime);
-
+        log.info("==== 주간 최고 최저 기온 06시 정보 조회 종료 ====");
     }
 
     @Async
     @Scheduled(cron = "0 10 18 * * *")
     public void week18(){
+        log.info("주간 최고 최저 기온 정보 조회 18시 - {}", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(18,00).format(DateTimeFormatter.ofPattern("HHmm"));
         weekForecastService.requestWeekForecast(baseTime);
-
+        log.info("==== 주간 최고 최저 기온 18시 정보 조회 종료 ====");
     }
 
     // 6시 18시 -> 주간 강수 및 기상 상태
     @Async
     @Scheduled(cron = "0 10 6 * * *")
     public void weekPop06(){
+        log.info("주간 강수 정보 조회 06시 - {}", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         String baseTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(6,0,0)).format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
         weekPopForecastService.requestWeekPopForecast(baseTime);
+        log.info("==== 주간 강수 06시 정보 조회 종료 ====");
     }
 
     @Async
     @Scheduled(cron = "0 10 18 * * *")
     public void weekPop18(){
+        log.info("주간 강수 정보 조회 18시 - {}", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         String baseTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(18,0,0)).format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
         weekPopForecastService.requestWeekPopForecast(baseTime);
+        log.info("==== 주간 강수 18시 정보 조회 종료 ====");
     }
 
     // push
@@ -78,23 +86,24 @@ public class StaticSchedule {
     @Async
     @Scheduled(cron = "0 59 23 * * SUN")
     public void deleteDB(){
+        log.info("오래된 정보 삭제 - {}", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         fcstService.deleteData();
     }
 
     // 로컬 테스트
-    @Async
-    @Scheduled(cron = "0 19 13 * * *")
-    public void week11(){
-        String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(6,00).format(DateTimeFormatter.ofPattern("HHmm"));
-        weekForecastService.requestWeekForecast(baseTime);
-
-    }
-
-    @Async
-    @Scheduled(cron = "0 19 13 * * *")
-    public void weekPop11(){
-        String baseTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(6,0,0)).format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
-        weekPopForecastService.requestWeekPopForecast(baseTime);
-    }
+//    @Async
+//    @Scheduled(cron = "0 38 11 * * *")
+//    public void week11(){
+//        String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(6,00).format(DateTimeFormatter.ofPattern("HHmm"));
+//        weekForecastService.requestWeekForecast(baseTime);
+//
+//    }
+//
+//    @Async
+//    @Scheduled(cron = "0 38 11 * * *")
+//    public void weekPop11(){
+//        String baseTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(6,0,0)).format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+//        weekPopForecastService.requestWeekPopForecast(baseTime);
+//    }
 
 }
