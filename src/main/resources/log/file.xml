@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE xml>
+<appender name="FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>/opt/log/awc/current.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+        <fileNamePattern>/opt/log/awc/old/%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+        <!-- each file should be at most 50MB, keep 30 days worth of history, but at most 1GB -->
+        <maxFileSize>50MB</maxFileSize>
+        <maxHistory>30</maxHistory>
+        <totalSizeCap>1GB</totalSizeCap>
+    </rollingPolicy>
+    <encoder>
+        <charset>UTF-8</charset>
+        <pattern>%d{yyyy:MM:dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %msg %n</pattern>
+    </encoder>
+</appender>
