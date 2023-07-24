@@ -50,6 +50,11 @@ spring:
 
 server:
   port: 8888
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 
 springdoc:
   swagger-ui:
