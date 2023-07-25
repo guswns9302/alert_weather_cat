@@ -38,6 +38,9 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에 오류가 발생했습니다."),
 
     /* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
+    FCM_PUSH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "FCM PUSH 오류가 발생했습니다."),
+
+    /* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
     OPEN_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출에 오류가 발생했습니다."),
     ;
 

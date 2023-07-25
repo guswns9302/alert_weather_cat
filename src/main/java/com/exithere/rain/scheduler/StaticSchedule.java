@@ -91,19 +91,27 @@ public class StaticSchedule {
     }
 
     // 로컬 테스트
-//    @Async
-//    @Scheduled(cron = "0 38 11 * * *")
-//    public void week11(){
-//        String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(6,00).format(DateTimeFormatter.ofPattern("HHmm"));
-//        weekForecastService.requestWeekForecast(baseTime);
-//
-//    }
-//
-//    @Async
-//    @Scheduled(cron = "0 38 11 * * *")
-//    public void weekPop11(){
-//        String baseTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(6,0,0)).format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
-//        weekPopForecastService.requestWeekPopForecast(baseTime);
-//    }
+    @Async
+    @Scheduled(cron = "0 2 10 * * *")
+    public void week11(){
+        String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(6,00).format(DateTimeFormatter.ofPattern("HHmm"));
+        weekForecastService.requestWeekForecast(baseTime);
+
+    }
+
+    @Async
+    @Scheduled(cron = "0 2 10 * * *")
+    public void weekPop11(){
+        String baseTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(6,0,0)).format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+        weekPopForecastService.requestWeekPopForecast(baseTime);
+    }
+
+    @Async
+    @Scheduled(cron = "0 5 11 * * *")
+    public void dustP11(){
+        log.info("미세먼지 정보 조회 - {}", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        dustForecastService.requestDustForecast();
+        log.info("==== 미세먼지 정보 조회 종료 ====");
+    }
 
 }

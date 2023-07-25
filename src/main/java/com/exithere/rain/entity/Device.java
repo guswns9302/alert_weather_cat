@@ -7,6 +7,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -61,7 +63,6 @@ public class Device {
 
     @Column(name = "LAST_LOGIN_AT")
     private LocalDateTime lastLoginAt;
-
 
     public void updatePushBtn(boolean toggle){
         this.pushBtn = toggle;

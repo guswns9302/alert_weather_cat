@@ -4,7 +4,9 @@ import com.exithere.rain.dto.request.AlarmRequest;
 import com.exithere.rain.dto.request.DeviceJoinRequest;
 import com.exithere.rain.dto.response.AlarmResponse;
 import com.exithere.rain.dto.response.DeviceTotalResponse;
+import com.exithere.rain.entity.AlarmHistory;
 import com.exithere.rain.exception.ErrorResponse;
+import com.exithere.rain.repository.AlarmHistoryRepository;
 import com.exithere.rain.service.AlarmService;
 import com.exithere.rain.service.DeviceService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "Device", description = "디바이스별 설정과 관련된 API")
 @RestController
 @RequestMapping("/api/v1/device")
@@ -26,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 public class AlarmController {
 
     private final AlarmService alarmService;
+    private final AlarmHistoryRepository alarmHistoryRepository;
 
     @Operation(summary = "update push alarm setting", description = "푸시 알람 세부 설정을 업데이트 합니다.")
     @ApiResponses({
@@ -35,5 +40,14 @@ public class AlarmController {
     @PutMapping("/push/setting")
     public ResponseEntity<AlarmResponse> pushSettingUpdate(@RequestBody AlarmRequest alarmRequest){
         return ResponseEntity.ok(alarmService.updateSetting(alarmRequest));
+    }
+
+    @Operation(summary = "get alarm history list", description = "알람 목록을 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AlarmHistory.class)))
+    })
+    @GetMapping("/alarm/history/{deviceId}")
+    public ResponseEntity<List<AlarmHistory>> getAlarmHistory(@PathVariable String deviceId){
+        return ResponseEntity.ok(alarmHistoryRepository.findByDeviceId(deviceId));
     }
 }

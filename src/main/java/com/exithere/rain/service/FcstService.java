@@ -140,7 +140,7 @@ public class FcstService {
         forecastResponse.setWeekForecastResponse(weekForecastResponse);
 
         // 미세먼지 추가
-        Map<String, String> dustForecast = dustForecastService.getDust(getRegion.getRegionName());
+        Map<String, String> dustForecast = dustForecastService.getDust(getRegion.getRegionName(), LocalDate.now());
         forecastResponse.setFindDust(dustForecast.get("findDust"));
         forecastResponse.setUltraFineDust(dustForecast.get("ultraFineDust"));
 

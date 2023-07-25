@@ -33,11 +33,11 @@ public class DustForecastService {
 
 
     @Transactional
-    public Map<String, String> getDust(String regionName) {
+    public Map<String, String> getDust(String regionName, LocalDate ld) {
         String regionDust = "";
         String regionUltraDust = "";
 
-        List<DustForecast> dustList = dustRepository.findByForecastDateOrderByDustIdAsc(LocalDate.now());
+        List<DustForecast> dustList = dustRepository.findByForecastDateOrderByDustIdAsc(ld);
 
         if(dustList.isEmpty()){
             return Map.of("findDust", "정보 없음", "ultraFineDust", "정보 없음");
