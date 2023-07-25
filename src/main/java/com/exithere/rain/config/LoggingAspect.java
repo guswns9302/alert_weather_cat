@@ -26,7 +26,8 @@ import java.util.stream.Stream;
 public class LoggingAspect {
 
     // controller 하위의 모든 public 메서드
-    @Pointcut("within(com.exithere.rain.controller..*)")
+    //@Pointcut("within(com.exithere.rain.controller..*)")
+    @Pointcut("within(com.exithere.rain.controller.DeviceController || com.exithere.rain.controller.AlarmController || com.exithere.rain.controller.FcstController)")
     public void loggingRequest(){}
 
     // POST
