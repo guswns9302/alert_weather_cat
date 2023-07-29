@@ -1,5 +1,8 @@
 package com.exithere.rain;
 
+import com.exithere.rain.entity.Region;
+import com.exithere.rain.repository.RegionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;

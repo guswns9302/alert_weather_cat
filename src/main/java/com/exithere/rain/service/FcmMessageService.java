@@ -69,7 +69,7 @@ public class FcmMessageService {
         else if(LocalDate.now().getDayOfWeek().toString().equals("SATURDAY")){
             targetDay = 6;
         }
-        else if(LocalDate.now().getDayOfWeek().toString().equals("TUESDAY")){
+        else if(LocalDate.now().getDayOfWeek().toString().equals("SUNDAY")){
             targetDay = 0;
         }
 
