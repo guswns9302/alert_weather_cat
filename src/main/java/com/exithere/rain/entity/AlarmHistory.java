@@ -31,6 +31,13 @@ public class AlarmHistory {
     @Column(name = "PUSH_DATE_TIME")
     private LocalDateTime pushDateTime;
 
+    @Column(name ="PUSH_TYPE")
+    private int pushType;
+    // 0 -> 날씨 요약
+    // 1 -> 기상 특보
+    // 2 -> 강수
+    // 3 -> 미세먼지
+
     @Column(name = "TITLE")
     private String title;
 

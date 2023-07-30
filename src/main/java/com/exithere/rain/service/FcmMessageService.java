@@ -96,7 +96,7 @@ public class FcmMessageService {
                 .collect(Collectors.toList());
         if(!pushAlarmOnDevice.isEmpty()){
             for(TargetDto device : pushAlarmOnDevice){
-                ForecastResponse forecastResponse = fcstService.reloadFcst(device.getSelectRegion().getRegionId());
+                ForecastResponse forecastResponse = fcstService.reloadFcst(device.getSelectRegion().getRegionId(), device.getDeviceId());
                 Forecast today = forecastResponse.getWeekForecastResponse().getZero();
                 Forecast tomorrow = forecastResponse.getWeekForecastResponse().getOne();
                 Map<String, String> tomorrowDust = dustForecastService.getDust(device.getSelectRegion().getRegionName(), LocalDate.now().plusDays(1));
@@ -142,6 +142,7 @@ public class FcmMessageService {
                                 .regionName(device.getSelectRegion().getRegionName())
                                 .pushDateTime(LocalDateTime.now())
                                 .title(title)
+                                .pushType(0)
                                 .temp(today.getMinTemp() + "℃ ~ " + today.getMaxTemp())
                                 .pop(Integer.parseInt(today.getProbabilityOfPrecipitation()))
                                 .dust(forecastResponse.getFindDust())
@@ -158,6 +159,7 @@ public class FcmMessageService {
                                 .regionName(device.getSelectRegion().getRegionName())
                                 .pushDateTime(LocalDateTime.now())
                                 .title(title)
+                                .pushType(0)
                                 .temp(tomorrow.getMinTemp() + "℃ ~ " + tomorrow.getMaxTemp())
                                 .pop(Integer.parseInt(tomorrow.getProbabilityOfPrecipitation()))
                                 .dust(tomorrowDust.get("findDust"))
@@ -242,6 +244,7 @@ public class FcmMessageService {
                                 .regionName(device.getSelectRegion().getRegionName())
                                 .pushDateTime(LocalDateTime.now())
                                 .title(title)
+                                .pushType(2)
                                 .pop(pop)
                                 .build()
                             );
@@ -302,6 +305,7 @@ public class FcmMessageService {
                                     .regionName(device.getSelectRegion().getRegionName())
                                     .pushDateTime(LocalDateTime.now())
                                     .title(title)
+                                    .pushType(3)
                                     .dust(dust)
                                     .ultraDust(ultraDust)
                                     .build()

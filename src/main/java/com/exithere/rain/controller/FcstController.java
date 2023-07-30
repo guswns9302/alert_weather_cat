@@ -29,7 +29,7 @@ public class FcstController {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ForecastResponse.class)))
     })
     @GetMapping("/reload")
-    public ResponseEntity<ForecastResponse> forecastReload(@RequestParam Long regionId){
-        return ResponseEntity.ok(fcstService.reloadFcst(regionId));
+    public ResponseEntity<ForecastResponse> forecastReload(@RequestParam Long regionId, @RequestParam String deviceId){
+        return ResponseEntity.ok(fcstService.reloadFcst(regionId, deviceId));
     }
 }

@@ -7,11 +7,13 @@ import com.exithere.rain.dto.response.forecast.shot.TwentyFourHoursForecastRespo
 import com.exithere.rain.dto.response.forecast.shot.VilageFcst;
 import com.exithere.rain.dto.response.forecast.week.MidTa;
 import com.exithere.rain.dto.response.forecast.week.WeekForecastResponse;
+import com.exithere.rain.entity.AlarmHistory;
 import com.exithere.rain.entity.Region;
 import com.exithere.rain.entity.ShortForecast;
 import com.exithere.rain.entity.WeekForecast;
 import com.exithere.rain.exception.CustomException;
 import com.exithere.rain.exception.ErrorCode;
+import com.exithere.rain.repository.AlarmHistoryRepository;
 import com.exithere.rain.repository.ShortForecastRepository;
 import com.exithere.rain.util.RestUtils;
 import lombok.RequiredArgsConstructor;
@@ -46,9 +48,10 @@ public class FcstService {
     private final ShortForecastRepository shortForecastRepository;
     private final WeekPopForecastService weekPopForecastService;
     private final DustForecastService dustForecastService;
+    private final AlarmHistoryRepository alarmHistoryRepository;
 
     @Transactional
-    public ForecastResponse reloadFcst(Long regionId) {
+    public ForecastResponse reloadFcst(Long regionId, String deviceId) {
         Region getRegion = regionService.findByRegionId(regionId);
 
         // db에 해당 지역의 예보 정보가 있는지 확인 없으면 기상청 api 호출해서 데이터 저장
@@ -144,6 +147,9 @@ public class FcstService {
         forecastResponse.setFindDust(dustForecast.get("findDust"));
         forecastResponse.setUltraFineDust(dustForecast.get("ultraFineDust"));
 
+        // 알람 이력 조회
+        List<AlarmHistory> alarmHistoryList = alarmHistoryRepository.findByDeviceIdOrderByPushDateTimeDesc(deviceId);
+        forecastResponse.setAlarmList(alarmHistoryList);
         return forecastResponse;
     }
 

@@ -48,6 +48,6 @@ public class AlarmController {
     })
     @GetMapping("/alarm/history/{deviceId}")
     public ResponseEntity<List<AlarmHistory>> getAlarmHistory(@PathVariable String deviceId){
-        return ResponseEntity.ok(alarmHistoryRepository.findByDeviceId(deviceId));
+        return ResponseEntity.ok(alarmHistoryRepository.findByDeviceIdOrderByPushDateTimeDesc(deviceId));
     }
 }

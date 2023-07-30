@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface AlarmHistoryRepository extends JpaRepository<AlarmHistory, Long> {
 
-    List<AlarmHistory> findByDeviceId(String deviceId);
+    List<AlarmHistory> findByDeviceIdOrderByPushDateTimeDesc(String deviceId);
 
 }

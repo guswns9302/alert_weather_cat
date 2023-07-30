@@ -2,6 +2,7 @@ package com.exithere.rain.dto.response.forecast;
 
 import com.exithere.rain.dto.response.forecast.shot.TwentyFourHoursForecastResponse;
 import com.exithere.rain.dto.response.forecast.week.WeekForecastResponse;
+import com.exithere.rain.entity.AlarmHistory;
 import com.exithere.rain.entity.Region;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +22,5 @@ public class ForecastResponse {
     private String ultraFineDust;
     private List<TwentyFourHoursForecastResponse> twentyFourHoursForecastResponseList;
     private WeekForecastResponse weekForecastResponse;
+    private List<AlarmHistory> alarmList;
 }

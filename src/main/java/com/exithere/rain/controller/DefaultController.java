@@ -8,6 +8,7 @@ public class DefaultController {
 
     @GetMapping("/")
     public String redirectNotion(){
-        return "redirect:https://www.notion.so/exit-here/d598e38889a248c59318f3c431833eae?pvs=4";
+        return "redirect:https://exit-here.notion.site/d598e38889a248c59318f3c431833eae?pvs=4";
+
     }
 }
