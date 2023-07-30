@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE xml>
 <appender name="FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-<!--    <file>/home/ubuntu/log/current.log</file>-->
-    <file>/Users/yunhyunjun/dev/exithere/alert_weather_cat/log/current.log</file>
+    <file>/home/ubuntu/log/current.log</file>
+<!--    <file>/Users/yunhyunjun/dev/exithere/alert_weather_cat/log/current.log</file>-->
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-<!--        <fileNamePattern>/home/ubuntu/log/old/%d{yyyy-MM-dd}-%i.log</fileNamePattern>-->
-        <fileNamePattern>/Users/yunhyunjun/dev/exithere/alert_weather_cat/log/old/%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+        <fileNamePattern>/home/ubuntu/log/old/%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+<!--        <fileNamePattern>/Users/yunhyunjun/dev/exithere/alert_weather_cat/log/old/%d{yyyy-MM-dd}-%i.log</fileNamePattern>-->
         <!-- each file should be at most 50MB, keep 30 days worth of history, but at most 1GB -->
         <maxFileSize>50MB</maxFileSize>
         <maxHistory>30</maxHistory>
