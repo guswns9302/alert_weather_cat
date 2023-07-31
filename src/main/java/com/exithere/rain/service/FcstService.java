@@ -72,75 +72,75 @@ public class FcstService {
 
         // 주간 날씨 조회
         WeekForecastResponse weekForecastResponse = weekForecastService.weekForecast(getRegion.getRegionName());
+        if(weekForecastResponse.getForecastDate() != null){
+            // 일 최고 최저 기온 찾기
+            LocalDateTime today = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 0, 0,0);
+            LocalDateTime tomorrow = today.plusDays(3);
+            List<ShortForecast> findTodayForecast = shortForecastRepository.findByRegion_RegionIdAndForecastDateTimeBetweenOrderByForecastDateTimeAsc(getRegion.getRegionId(), today, tomorrow);
 
-        // 일 최고 최저 기온 찾기
-        LocalDateTime today = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 0, 0,0);
-        LocalDateTime tomorrow = today.plusDays(3);
-        List<ShortForecast> findTodayForecast = shortForecastRepository.findByRegion_RegionIdAndForecastDateTimeBetweenOrderByForecastDateTimeAsc(getRegion.getRegionId(), today, tomorrow);
+            for(ShortForecast forecast : findTodayForecast){
+                if(forecast.getMaxTemp() != null){
+                    if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
+                        forecastResponse.setMaxTemp(forecast.getMaxTemp());
+                        weekForecastResponse.getZero().setMaxTemp(forecast.getMaxTemp());
+                    }
+                    if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))){
+                        weekForecastResponse.getOne().setMaxTemp(forecast.getMaxTemp());
+                    }
+                    if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(2))){
+                        weekForecastResponse.getTwo().setMaxTemp(forecast.getMaxTemp());
+                    }
+                }
 
-        for(ShortForecast forecast : findTodayForecast){
-            if(forecast.getMaxTemp() != null){
-                if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
-                    forecastResponse.setMaxTemp(forecast.getMaxTemp());
-                    weekForecastResponse.getZero().setMaxTemp(forecast.getMaxTemp());
-                }
-                if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))){
-                    weekForecastResponse.getOne().setMaxTemp(forecast.getMaxTemp());
-                }
-                if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(2))){
-                    weekForecastResponse.getTwo().setMaxTemp(forecast.getMaxTemp());
+                if(forecast.getMinTemp() != null){
+                    if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
+                        forecastResponse.setMinTemp(forecast.getMinTemp());
+                        weekForecastResponse.getZero().setMinTemp(forecast.getMinTemp());
+                    }
+                    if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))){
+                        weekForecastResponse.getOne().setMinTemp(forecast.getMinTemp());
+                    }
+                    if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(2))){
+                        weekForecastResponse.getTwo().setMinTemp(forecast.getMinTemp());
+                    }
                 }
             }
 
-            if(forecast.getMinTemp() != null){
-                if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
-                    forecastResponse.setMinTemp(forecast.getMinTemp());
-                    weekForecastResponse.getZero().setMinTemp(forecast.getMinTemp());
-                }
-                if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))){
-                    weekForecastResponse.getOne().setMinTemp(forecast.getMinTemp());
-                }
-                if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(2))){
-                    weekForecastResponse.getTwo().setMinTemp(forecast.getMinTemp());
-                }
+            if(forecastResponse.getMaxTemp() == null){
+                forecastResponse.setMaxTemp(weekForecastResponse.getOne().getMaxTemp());
+                weekForecastResponse.getZero().setMaxTemp(weekForecastResponse.getOne().getMaxTemp());
+            }
+            if(forecastResponse.getMinTemp() == null){
+                forecastResponse.setMinTemp(weekForecastResponse.getOne().getMinTemp());
+                weekForecastResponse.getZero().setMinTemp(weekForecastResponse.getOne().getMinTemp());
+            }
+
+            // 주간 강수량 조회
+            List<ShortForecast> ofToday = findTodayForecast.stream().filter(i -> i.getForecastDateTime().toLocalDate().equals(LocalDate.now())).collect(Collectors.toList());
+            List<ShortForecast> ofOne = findTodayForecast.stream().filter(i -> i.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))).collect(Collectors.toList());
+            List<ShortForecast> ofTwo = findTodayForecast.stream().filter(i -> i.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(2))).collect(Collectors.toList());
+
+            WeekPopForecastResponse popForWeek = weekPopForecastService.getPopForWeek(getRegion.getRegionName());
+            if(popForWeek.getRnSt3() != null){
+                weekForecastResponse.getZero().setProbabilityOfPrecipitation(this.getPop(ofToday));
+                weekForecastResponse.getOne().setProbabilityOfPrecipitation(this.getPop(ofOne));
+                weekForecastResponse.getTwo().setProbabilityOfPrecipitation(this.getPop(ofTwo));
+                weekForecastResponse.getThree().setProbabilityOfPrecipitation(popForWeek.getRnSt3());
+                weekForecastResponse.getFour().setProbabilityOfPrecipitation(popForWeek.getRnSt4());
+                weekForecastResponse.getFive().setProbabilityOfPrecipitation(popForWeek.getRnSt5());
+                weekForecastResponse.getSix().setProbabilityOfPrecipitation(popForWeek.getRnSt6());
+
+                weekForecastResponse.getZero().setSkyIcon(String.valueOf(this.getIcon(ofToday)));
+                weekForecastResponse.getOne().setSkyIcon(String.valueOf(this.getIcon(ofOne)));
+                weekForecastResponse.getTwo().setSkyIcon(String.valueOf(this.getIcon(ofTwo)));
+                weekForecastResponse.getThree().setSkyIcon(String.valueOf(popForWeek.getWf3()));
+                weekForecastResponse.getFour().setSkyIcon(String.valueOf(popForWeek.getWf4()));
+                weekForecastResponse.getFive().setSkyIcon(String.valueOf(popForWeek.getWf5()));
+                weekForecastResponse.getSix().setSkyIcon(String.valueOf(popForWeek.getWf6()));
+
+                forecastResponse.setWeekForecastResponse(weekForecastResponse);
             }
         }
-
-        if(forecastResponse.getMaxTemp() == null){
-            forecastResponse.setMaxTemp(weekForecastResponse.getOne().getMaxTemp());
-            weekForecastResponse.getZero().setMaxTemp(weekForecastResponse.getOne().getMaxTemp());
-        }
-        if(forecastResponse.getMinTemp() == null){
-            forecastResponse.setMinTemp(weekForecastResponse.getOne().getMinTemp());
-            weekForecastResponse.getZero().setMinTemp(weekForecastResponse.getOne().getMinTemp());
-        }
-
-        // 주간 강수량 조회
-        List<ShortForecast> ofToday = findTodayForecast.stream().filter(i -> i.getForecastDateTime().toLocalDate().equals(LocalDate.now())).collect(Collectors.toList());
-        List<ShortForecast> ofOne = findTodayForecast.stream().filter(i -> i.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))).collect(Collectors.toList());
-        List<ShortForecast> ofTwo = findTodayForecast.stream().filter(i -> i.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(2))).collect(Collectors.toList());
-
-        WeekPopForecastResponse popForWeek = weekPopForecastService.getPopForWeek(getRegion.getRegionName());
-        weekForecastResponse.getZero().setProbabilityOfPrecipitation(this.getPop(ofToday));
-        weekForecastResponse.getOne().setProbabilityOfPrecipitation(this.getPop(ofOne));
-        weekForecastResponse.getTwo().setProbabilityOfPrecipitation(this.getPop(ofTwo));
-        weekForecastResponse.getThree().setProbabilityOfPrecipitation(popForWeek.getRnSt3());
-        weekForecastResponse.getFour().setProbabilityOfPrecipitation(popForWeek.getRnSt4());
-        weekForecastResponse.getFive().setProbabilityOfPrecipitation(popForWeek.getRnSt5());
-        weekForecastResponse.getSix().setProbabilityOfPrecipitation(popForWeek.getRnSt6());
-        weekForecastResponse.getSeven().setProbabilityOfPrecipitation(popForWeek.getRnSt7());
-
-        weekForecastResponse.getZero().setSkyIcon(String.valueOf(this.getIcon(ofToday)));
-        weekForecastResponse.getOne().setSkyIcon(String.valueOf(this.getIcon(ofOne)));
-        weekForecastResponse.getTwo().setSkyIcon(String.valueOf(this.getIcon(ofTwo)));
-        weekForecastResponse.getThree().setSkyIcon(String.valueOf(popForWeek.getWf3()));
-        weekForecastResponse.getFour().setSkyIcon(String.valueOf(popForWeek.getWf4()));
-        weekForecastResponse.getFive().setSkyIcon(String.valueOf(popForWeek.getWf5()));
-        weekForecastResponse.getSix().setSkyIcon(String.valueOf(popForWeek.getWf6()));
-        weekForecastResponse.getSeven().setSkyIcon(String.valueOf(popForWeek.getWf7()));
-
-
-        forecastResponse.setWeekForecastResponse(weekForecastResponse);
 
         // 미세먼지 추가
         Map<String, String> dustForecast = dustForecastService.getDust(getRegion.getRegionName(), LocalDate.now());

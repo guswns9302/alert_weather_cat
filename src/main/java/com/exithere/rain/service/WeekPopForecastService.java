@@ -4,8 +4,6 @@ import com.exithere.rain.dto.response.forecast.pop.Item;
 import com.exithere.rain.dto.response.forecast.pop.MidLand;
 import com.exithere.rain.dto.response.forecast.pop.PopRegionIdEnum;
 import com.exithere.rain.dto.response.forecast.pop.WeekPopForecastResponse;
-import com.exithere.rain.dto.response.forecast.week.RegionIdEnum;
-import com.exithere.rain.entity.WeekForecast;
 import com.exithere.rain.entity.WeekPopForecast;
 import com.exithere.rain.exception.CustomException;
 import com.exithere.rain.exception.ErrorCode;
@@ -23,9 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +40,8 @@ public class WeekPopForecastService {
         log.info("주간 강수 - region name : {} / region code : {}", regionName, regionCode);
         Optional<WeekPopForecast> exist = weekPopForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now());
         if(exist.isEmpty()){
-            throw new CustomException(ErrorCode.WEEK_POP_FORECAST_NOT_FOUND);
+            //throw new CustomException(ErrorCode.WEEK_POP_FORECAST_NOT_FOUND);
+            return WeekPopForecastResponse.builder().build();
         }
         else{
             return WeekPopForecastResponse.from(exist.get());

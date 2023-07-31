@@ -76,6 +76,10 @@ public class Device {
         this.lastLoginAt = LocalDateTime.now();
     }
 
+    public void updateFcmToken(String fcmToken){
+        this.fcmToken = fcmToken;
+    }
+
     public void updateFirstRegion(Region region) {
         this.firstRegionCd =  region;
     }
