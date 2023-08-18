@@ -38,6 +38,9 @@ public class DeviceController {
     })
     @PostMapping ("/join")
     public ResponseEntity<DeviceTotalResponse> join(@RequestBody DeviceJoinRequest deviceJoinRequest){
+        if(deviceJoinRequest.getRegionName().equals("")){
+            deviceJoinRequest.setRegionName("서울 중구 명동");
+        }
         return ResponseEntity.ok(deviceService.loadAndSaveUser(deviceJoinRequest));
     }
 
