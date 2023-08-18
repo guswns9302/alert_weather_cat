@@ -81,7 +81,6 @@ public class FcstService {
             for(ShortForecast forecast : findTodayForecast){
                 if(forecast.getMaxTemp() != null){
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
-                        System.out.println(forecast.getMaxTemp());
                         forecastResponse.setMaxTemp(forecast.getMaxTemp());
                         weekForecastResponse.getZero().setMaxTemp(forecast.getMaxTemp());
                     }
@@ -315,10 +314,12 @@ public class FcstService {
                         LocalDateTime forecastDateTime = LocalDateTime.of(forecastDate, forecastTime);
 
                         Optional<ShortForecast> isSfcst = shortForecastRepository.findByRegion_RegionIdAndForecastDateTime(region.getRegionId(), forecastDateTime);
+
+                        String parse = item.getFcstValue().split(".")[0];
                         if(isSfcst.isEmpty()){
                             ShortForecast forecast = ShortForecast.builder()
                                     .region(region)
-                                    .maxTemp(item.getFcstValue())
+                                    .maxTemp(parse)
                                     .baseTime(base.get("baseTime"))
                                     .forecastDateTime(forecastDateTime)
                                     .build();
@@ -327,7 +328,7 @@ public class FcstService {
                         }
                         else{
                             ShortForecast sfcst = isSfcst.get();
-                            sfcst.updateTMX(item.getFcstValue(), base.get("baseTime"));
+                            sfcst.updateTMX(parse, base.get("baseTime"));
                         }
                     }
 
@@ -338,11 +339,12 @@ public class FcstService {
                         LocalDate forecastDate = LocalDate.parse(item.getFcstDate(), DateTimeFormatter.ofPattern("yyyyMMdd"));
                         LocalDateTime forecastDateTime = LocalDateTime.of(forecastDate, forecastTime);
 
+                        String parse = item.getFcstValue().split(".")[0];
                         Optional<ShortForecast> isSfcst = shortForecastRepository.findByRegion_RegionIdAndForecastDateTime(region.getRegionId(), forecastDateTime);
                         if(isSfcst.isEmpty()){
                             ShortForecast forecast = ShortForecast.builder()
                                     .region(region)
-                                    .minTemp(item.getFcstValue())
+                                    .minTemp(parse)
                                     .baseTime(base.get("baseTime"))
                                     .forecastDateTime(forecastDateTime)
                                     .build();
@@ -351,7 +353,7 @@ public class FcstService {
                         }
                         else{
                             ShortForecast sfcst = isSfcst.get();
-                            sfcst.updateTMN(item.getFcstValue(), base.get("baseTime"));
+                            sfcst.updateTMN(parse, base.get("baseTime"));
                         }
                     }
 
