@@ -89,7 +89,7 @@ public class DustForecast {
 
     public void updateDustForecast(Items item, Map<String, String> region) {
         this.baseTime = item.getDataTime();
-        this.forecastDate = LocalDate.now();
+        this.forecastDate = LocalDate.parse(item.getInformData());
         this.seoul = region.get("서울");
         this.incheon = region.get("인천");
         this.jeju = region.get("제주");

@@ -11,7 +11,6 @@ import com.exithere.rain.entity.Region;
 import com.exithere.rain.exception.CustomException;
 import com.exithere.rain.exception.ErrorCode;
 import com.exithere.rain.repository.DeviceRepository;
-import com.exithere.rain.repository.RegionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -42,6 +40,7 @@ public class DeviceService {
         if(existDeviceId.isPresent()){
             // 있으면 해당 device id의 설정을 return
             existDeviceId.get().updateLastLogin();
+            existDeviceId.get().updateFcmToken(deviceJoinRequest.getFcmToken());
             return DeviceTotalResponse.from(existDeviceId.get());
         }
         else {

@@ -21,9 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +39,8 @@ public class WeekForecastService {
         log.info("주간 최저 최고 기온 - region name : {} / region code : {}", regionName, regionCode);
         Optional<WeekForecast> existWeekForecast = weekForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now());
         if(existWeekForecast.isEmpty()){
-            throw new CustomException(ErrorCode.WEEK_FORECAST_NOT_FOUND);
+            //throw new CustomException(ErrorCode.WEEK_FORECAST_NOT_FOUND);
+            return WeekForecastResponse.builder().build();
         }
         else{
             return WeekForecastResponse.from(existWeekForecast.get());

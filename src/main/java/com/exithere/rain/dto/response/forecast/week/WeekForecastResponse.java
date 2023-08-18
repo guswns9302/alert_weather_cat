@@ -4,6 +4,7 @@ import com.exithere.rain.entity.WeekForecast;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
+@ToString
 public class WeekForecastResponse {
     private LocalDate forecastDate;
     private Forecast zero;
@@ -21,7 +23,6 @@ public class WeekForecastResponse {
     private Forecast four;
     private Forecast five;
     private Forecast six;
-    private Forecast seven;
 
 
     public static WeekForecastResponse from(WeekForecast weekForecast) {
@@ -34,7 +35,6 @@ public class WeekForecastResponse {
                 .four(Forecast.from(weekForecast.getMaxTemp4(), weekForecast.getMinTemp4()))
                 .five(Forecast.from(weekForecast.getMaxTemp5(), weekForecast.getMinTemp5()))
                 .six(Forecast.from(weekForecast.getMaxTemp6(), weekForecast.getMinTemp6()))
-                .seven(Forecast.from(weekForecast.getMaxTemp7(), weekForecast.getMinTemp7()))
                 .build();
     }
 }
