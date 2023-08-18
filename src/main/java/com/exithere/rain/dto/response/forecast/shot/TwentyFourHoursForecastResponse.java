@@ -20,28 +20,36 @@ public class TwentyFourHoursForecastResponse {
             skyIcon = "1";
         }
 
-        if(shortForecast.getSkyIcon().equals("11") || shortForecast.getSkyIcon().equals("12") || shortForecast.getSkyIcon().equals("13") || shortForecast.getSkyIcon().equals("14")){
+        if(shortForecast.getSkyIcon().equals("11") || shortForecast.getSkyIcon().equals("14")){
             skyIcon = "2";
         }
 
-        if(shortForecast.getSkyIcon().equals("30")){
+        if(shortForecast.getSkyIcon().equals("12")){
             skyIcon = "3";
         }
 
-        if(shortForecast.getSkyIcon().equals("31") || shortForecast.getSkyIcon().equals("34") || shortForecast.getSkyIcon().equals("41") || shortForecast.getSkyIcon().equals("44")){
+        if(shortForecast.getSkyIcon().equals("13")){
             skyIcon = "4";
         }
 
-        if(shortForecast.getSkyIcon().equals("32") || shortForecast.getSkyIcon().equals("42")){
+        if(shortForecast.getSkyIcon().equals("30")){
             skyIcon = "5";
         }
 
-        if(shortForecast.getSkyIcon().equals("33") || shortForecast.getSkyIcon().equals("43")){
+        if(shortForecast.getSkyIcon().equals("31") || shortForecast.getSkyIcon().equals("34") || shortForecast.getSkyIcon().equals("41") || shortForecast.getSkyIcon().equals("44")){
             skyIcon = "6";
         }
 
-        if(shortForecast.getSkyIcon().equals("40")){
+        if(shortForecast.getSkyIcon().equals("32") || shortForecast.getSkyIcon().equals("42")){
             skyIcon = "7";
+        }
+
+        if(shortForecast.getSkyIcon().equals("33") || shortForecast.getSkyIcon().equals("43")){
+            skyIcon = "8";
+        }
+
+        if(shortForecast.getSkyIcon().equals("40")){
+            skyIcon = "9";
         }
 
         return TwentyFourHoursForecastResponse.builder()

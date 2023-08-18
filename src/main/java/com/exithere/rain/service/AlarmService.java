@@ -37,7 +37,7 @@ public class AlarmService {
                 .summary(true)
                 .special(false)
                 .rainFall(false)
-                .ratio(Ratio.SIXTH)
+                .ratio(Ratio.NONE)
                 .dust(false)
                 .build();
 
