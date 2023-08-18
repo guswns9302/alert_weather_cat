@@ -81,27 +81,28 @@ public class FcstService {
             for(ShortForecast forecast : findTodayForecast){
                 if(forecast.getMaxTemp() != null){
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
-                        forecastResponse.setMaxTemp(forecast.getMaxTemp().split(".")[0]);
-                        weekForecastResponse.getZero().setMaxTemp(forecast.getMaxTemp().split(".")[0]);
+                        System.out.println(forecast.getMaxTemp());
+                        forecastResponse.setMaxTemp(forecast.getMaxTemp());
+                        weekForecastResponse.getZero().setMaxTemp(forecast.getMaxTemp());
                     }
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))){
-                        weekForecastResponse.getOne().setMaxTemp(forecast.getMaxTemp().split(".")[0]);
+                        weekForecastResponse.getOne().setMaxTemp(forecast.getMaxTemp());
                     }
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(2))){
-                        weekForecastResponse.getTwo().setMaxTemp(forecast.getMaxTemp().split(".")[0]);
+                        weekForecastResponse.getTwo().setMaxTemp(forecast.getMaxTemp());
                     }
                 }
 
                 if(forecast.getMinTemp() != null){
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
-                        forecastResponse.setMinTemp(forecast.getMinTemp().split(".")[0]);
-                        weekForecastResponse.getZero().setMinTemp(forecast.getMinTemp().split(".")[0]);
+                        forecastResponse.setMinTemp(forecast.getMinTemp());
+                        weekForecastResponse.getZero().setMinTemp(forecast.getMinTemp());
                     }
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))){
-                        weekForecastResponse.getOne().setMinTemp(forecast.getMinTemp().split(".")[0]);
+                        weekForecastResponse.getOne().setMinTemp(forecast.getMinTemp());
                     }
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(2))){
-                        weekForecastResponse.getTwo().setMinTemp(forecast.getMinTemp().split(".")[0]);
+                        weekForecastResponse.getTwo().setMinTemp(forecast.getMinTemp());
                     }
                 }
             }
