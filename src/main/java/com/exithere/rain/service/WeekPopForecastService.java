@@ -41,7 +41,7 @@ public class WeekPopForecastService {
         Optional<WeekPopForecast> exist = weekPopForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now());
         if(exist.isEmpty()){
             //throw new CustomException(ErrorCode.WEEK_POP_FORECAST_NOT_FOUND);
-            Optional<WeekPopForecast> existAfterOneDays = weekPopForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now().plusDays(1));
+            Optional<WeekPopForecast> existAfterOneDays = weekPopForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now().minusDays(1));
             if(existAfterOneDays.isEmpty()){
                 log.error("주간 강수 조회 실패 -> return null!!");
                 return WeekPopForecastResponse.builder().build();
