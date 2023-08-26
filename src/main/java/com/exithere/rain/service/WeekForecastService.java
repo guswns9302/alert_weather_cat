@@ -48,7 +48,7 @@ public class WeekForecastService {
             }
             else{
                 log.info("주간 최저 최고 기온 after day - region name : {} / region code : {}", regionName, regionCode);
-                return WeekForecastResponse.fromAfterOneDay(existWeekForecastAfterOneDays.get());
+                return WeekForecastResponse.from(existWeekForecastAfterOneDays.get());
             }
         }
         else{

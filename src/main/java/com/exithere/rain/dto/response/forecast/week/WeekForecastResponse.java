@@ -38,16 +38,16 @@ public class WeekForecastResponse {
                 .build();
     }
 
-    public static WeekForecastResponse fromAfterOneDay(WeekForecast weekForecast){
-        return WeekForecastResponse.builder()
-                .forecastDate(weekForecast.getForecastDate())
-                .zero(new Forecast())
-                .one(new Forecast())
-                .two(new Forecast())
-                .three(Forecast.from(weekForecast.getMaxTemp4(), weekForecast.getMinTemp4()))
-                .four(Forecast.from(weekForecast.getMaxTemp5(), weekForecast.getMinTemp5()))
-                .five(Forecast.from(weekForecast.getMaxTemp6(), weekForecast.getMinTemp6()))
-                .six(Forecast.from(weekForecast.getMaxTemp7(), weekForecast.getMinTemp7()))
-                .build();
-    }
+//    public static WeekForecastResponse fromAfterOneDay(WeekForecast weekForecast){
+//        return WeekForecastResponse.builder()
+//                .forecastDate(weekForecast.getForecastDate())
+//                .zero(new Forecast())
+//                .one(new Forecast())
+//                .two(new Forecast())
+//                .three(Forecast.from(weekForecast.getMaxTemp4(), weekForecast.getMinTemp4()))
+//                .four(Forecast.from(weekForecast.getMaxTemp5(), weekForecast.getMinTemp5()))
+//                .five(Forecast.from(weekForecast.getMaxTemp6(), weekForecast.getMinTemp6()))
+//                .six(Forecast.from(weekForecast.getMaxTemp7(), weekForecast.getMinTemp7()))
+//                .build();
+//    }
 }

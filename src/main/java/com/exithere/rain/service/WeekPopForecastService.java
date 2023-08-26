@@ -37,13 +37,22 @@ public class WeekPopForecastService {
     @Transactional
     public WeekPopForecastResponse getPopForWeek(String regionName) {
         String regionCode = PopRegionIdEnum.find(regionName);
-        log.info("주간 강수 - region name : {} / region code : {}", regionName, regionCode);
+
         Optional<WeekPopForecast> exist = weekPopForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now());
         if(exist.isEmpty()){
             //throw new CustomException(ErrorCode.WEEK_POP_FORECAST_NOT_FOUND);
-            return WeekPopForecastResponse.builder().build();
+            Optional<WeekPopForecast> existAfterOneDays = weekPopForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now().plusDays(1));
+            if(existAfterOneDays.isEmpty()){
+                log.error("주간 강수 조회 실패 -> return null!!");
+                return WeekPopForecastResponse.builder().build();
+            }
+            else{
+                log.info("주간 강수 조회 after day - region name : {} / region code : {}", regionName, regionCode);
+                return WeekPopForecastResponse.from(existAfterOneDays.get());
+            }
         }
         else{
+            log.info("주간 강수 조회 - region name : {} / region code : {}", regionName, regionCode);
             return WeekPopForecastResponse.from(exist.get());
         }
     }
