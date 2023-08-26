@@ -68,7 +68,7 @@ public class FcstService {
         forecastResponse.setRegion(getRegion);
 
         LocalDate dateNow = LocalDate.now();
-        String apiCallBaseTime = dateNow.getMonth() + "월 " + dateNow.getDayOfMonth() + "일 " + shortForecastList.get(0).getBaseTime().substring(0,2) + "시";
+        String apiCallBaseTime = dateNow.getMonthValue() + "월 " + dateNow.getDayOfMonth() + "일 " + shortForecastList.get(0).getBaseTime().substring(0,2) + "시";
         forecastResponse.setBaseTime(apiCallBaseTime);
         forecastResponse.setCurrentTemp(shortForecastList.get(0).getHourTemp());
         forecastResponse.setHumidity(shortForecastList.get(0).getHumidity());
@@ -87,7 +87,7 @@ public class FcstService {
                 if(forecast.getMaxTemp() != null){
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
                         forecastResponse.setMaxTemp(forecast.getMaxTemp());
-                        forecastResponse.setMaxTempIcon(forecast.getSkyIcon());
+                        forecastResponse.setMaxTempIcon(this.findIcon(forecast.getSkyIcon()));
                         weekForecastResponse.getZero().setMaxTemp(forecast.getMaxTemp());
                     }
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))){
@@ -101,7 +101,7 @@ public class FcstService {
                 if(forecast.getMinTemp() != null){
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
                         forecastResponse.setMinTemp(forecast.getMinTemp());
-                        forecastResponse.setMinTempIcon(forecast.getSkyIcon());
+                        forecastResponse.setMinTempIcon(this.findIcon(forecast.getSkyIcon()));
                         weekForecastResponse.getZero().setMinTemp(forecast.getMinTemp());
                     }
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))){
@@ -113,14 +113,15 @@ public class FcstService {
                 }
             }
 
-            if(forecastResponse.getMaxTemp() == null){
-                forecastResponse.setMaxTemp(weekForecastResponse.getOne().getMaxTemp());
-                weekForecastResponse.getZero().setMaxTemp(weekForecastResponse.getOne().getMaxTemp());
-            }
-            if(forecastResponse.getMinTemp() == null){
-                forecastResponse.setMinTemp(weekForecastResponse.getOne().getMinTemp());
-                weekForecastResponse.getZero().setMinTemp(weekForecastResponse.getOne().getMinTemp());
-            }
+//            if(forecastResponse.getMaxTemp() == null){
+//                forecastResponse.setMaxTemp(weekForecastResponse.getOne().getMaxTemp());
+//                forecastResponse.setMaxTempIcon();
+//                weekForecastResponse.getZero().setMaxTemp(weekForecastResponse.getOne().getMaxTemp());
+//            }
+//            if(forecastResponse.getMinTemp() == null){
+//                forecastResponse.setMinTemp(weekForecastResponse.getOne().getMinTemp());
+//                weekForecastResponse.getZero().setMinTemp(weekForecastResponse.getOne().getMinTemp());
+//            }
 
             // 주간 강수량 조회
             List<ShortForecast> ofToday = findTodayForecast.stream().filter(i -> i.getForecastDateTime().toLocalDate().equals(LocalDate.now())).collect(Collectors.toList());
@@ -181,6 +182,47 @@ public class FcstService {
             icon = (listIcon > icon) ? listIcon : icon;
         }
         return icon;
+    }
+
+    private String findIcon(String iconValue){
+        String skyIcon = "";
+        if(iconValue.equals("10")){
+            skyIcon = "1";
+        }
+
+        if(iconValue.equals("11") || iconValue.equals("14")){
+            skyIcon = "2";
+        }
+
+        if(iconValue.equals("12")){
+            skyIcon = "3";
+        }
+
+        if(iconValue.equals("13")){
+            skyIcon = "4";
+        }
+
+        if(iconValue.equals("30")){
+            skyIcon = "5";
+        }
+
+        if(iconValue.equals("31") || iconValue.equals("34") || iconValue.equals("41") || iconValue.equals("44")){
+            skyIcon = "6";
+        }
+
+        if(iconValue.equals("32") || iconValue.equals("42")){
+            skyIcon = "7";
+        }
+
+        if(iconValue.equals("33") || iconValue.equals("43")){
+            skyIcon = "8";
+        }
+
+        if(iconValue.equals("40")){
+            skyIcon = "9";
+        }
+
+        return skyIcon;
     }
 
     private List<ShortForecast> getFcstFromDB(Region region){
