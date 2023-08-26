@@ -36,7 +36,7 @@ public class WeekForecastService {
     @Transactional
     public WeekForecastResponse weekForecast(String regionName){
         String regionCode = RegionIdEnum.find(regionName);
-        log.info("주간 최저 최고 기온 - region name : {} / region code : {}", regionName, regionCode);
+
         Optional<WeekForecast> existWeekForecast = weekForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now());
         if(existWeekForecast.isEmpty()){
             //throw new CustomException(ErrorCode.WEEK_FORECAST_NOT_FOUND);
@@ -47,10 +47,12 @@ public class WeekForecastService {
                 return WeekForecastResponse.builder().build();
             }
             else{
+                log.info("주간 최저 최고 기온 after day - region name : {} / region code : {}", regionName, regionCode);
                 return WeekForecastResponse.fromAfterOneDay(existWeekForecastAfterOneDays.get());
             }
         }
         else{
+            log.info("주간 최저 최고 기온 - region name : {} / region code : {}", regionName, regionCode);
             return WeekForecastResponse.from(existWeekForecast.get());
         }
     }

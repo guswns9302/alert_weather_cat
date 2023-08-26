@@ -77,7 +77,6 @@ public class FcstService {
         // 주간 날씨 조회
         WeekForecastResponse weekForecastResponse = weekForecastService.weekForecast(getRegion.getRegionName());
         if(weekForecastResponse.getForecastDate() != null){
-            log.info("주간 날씨 정보 조회 성공 !! regionName : {}", getRegion.getRegionName());
             // 일 최고 최저 기온 찾기
             LocalDateTime today = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 0, 0,0);
             LocalDateTime tomorrow = today.plusDays(3);
@@ -145,9 +144,8 @@ public class FcstService {
                 weekForecastResponse.getFour().setSkyIcon(String.valueOf(popForWeek.getWf4()));
                 weekForecastResponse.getFive().setSkyIcon(String.valueOf(popForWeek.getWf5()));
                 weekForecastResponse.getSix().setSkyIcon(String.valueOf(popForWeek.getWf6()));
-
-                forecastResponse.setWeekForecastResponse(weekForecastResponse);
             }
+            forecastResponse.setWeekForecastResponse(weekForecastResponse);
         }
         else{
             log.error("주간 날씨 정보 조회 실패...! regionName : {}", getRegion.getRegionName());
