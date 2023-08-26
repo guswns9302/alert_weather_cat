@@ -6,17 +6,22 @@ import com.exithere.rain.entity.AlarmHistory;
 import com.exithere.rain.entity.Region;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class ForecastResponse {
 
     private Region region;
+    private String baseTime;
     private String currentTemp;
     private String maxTemp;
+    private String maxTempIcon;
     private String minTemp;
+    private String minTempIcon;
     private String humidity;
     private String findDust;
     private String ultraFineDust;

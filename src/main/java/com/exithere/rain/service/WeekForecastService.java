@@ -40,7 +40,15 @@ public class WeekForecastService {
         Optional<WeekForecast> existWeekForecast = weekForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now());
         if(existWeekForecast.isEmpty()){
             //throw new CustomException(ErrorCode.WEEK_FORECAST_NOT_FOUND);
-            return WeekForecastResponse.builder().build();
+            //return WeekForecastResponse.builder().build();
+            Optional<WeekForecast> existWeekForecastAfterOneDays = weekForecastRepository.findByRegionIdAndForecastDate(regionCode, LocalDate.now().minusDays(1));
+            if(existWeekForecastAfterOneDays.isEmpty()){
+                log.error("주간 날씨 정보 조회 실패 -> return null!!");
+                return WeekForecastResponse.builder().build();
+            }
+            else{
+                return WeekForecastResponse.fromAfterOneDay(existWeekForecastAfterOneDays.get());
+            }
         }
         else{
             return WeekForecastResponse.from(existWeekForecast.get());

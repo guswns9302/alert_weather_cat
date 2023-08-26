@@ -136,54 +136,27 @@ public class StaticSchedule {
     @Async
     @Scheduled(cron = "0 59 23 * * SUN")
     public void deleteDB(){
-        log.info("오래된 정보 삭제 - {}", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        fcstService.deleteData();
+        LocalDate now = LocalDate.now();
+        // 1일 전
+        LocalDate now_before4 = now.minusDays(1);
+
+        // 1일 전의 1주 전
+        LocalDate now_before4_week = now_before4.minusWeeks(1);
+
+        log.info("OLD DATA DELETE -- from : {} | to : {}", now_before4_week, now_before4);
+
+        try {
+            fcstService.deleteData(now_before4, now_before4_week);
+        }
+        catch (Exception e){
+            log.error("예보 데이터 삭제 실패...!");
+        }
+
+        try {
+            dustForecastService.deleteData(now_before4, now_before4_week);
+        }
+        catch (Exception e){
+            log.error("미세먼지 데이터 삭제 실패...!");
+        }
     }
-
-    // 로컬 테스트
-//    @Async
-//    @Scheduled(cron = "0 49 16 * * *")
-//    public void week11(){
-//        log.debug("실행");
-//        String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(6,00).format(DateTimeFormatter.ofPattern("HHmm"));
-//        int count = 0;
-//        while (count < 5){
-//            try {
-//                weekForecastService.requestWeekForecast(baseTime);
-//                count = 6;
-//                log.debug("종료");
-//            }
-//            catch (Exception e){
-//                log.debug("error 발생");
-//                count ++;
-//
-//            }
-//        }
-//    }
-//
-//    @Async
-//    @Scheduled(cron = "0 47 16 * * *")
-//    public void weekPop11(){
-//        String baseTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(6,0,0)).format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
-//        int count = 0;
-//        while (count < 5){
-//            try {
-//                weekPopForecastService.requestWeekPopForecast(baseTime);
-//                count = 6;
-//            }
-//            catch (Exception e){
-//                log.debug("error 발생");
-//                count ++;
-//            }
-//        }
-//    }
-//
-//    @Async
-//    @Scheduled(cron = "0 30 16 * * *")
-//    public void dustP11(){
-//        log.info("미세먼지 정보 조회 - {}", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-//        dustForecastService.requestDustForecast();
-//        log.info("==== 미세먼지 정보 조회 종료 ====");
-//    }
-
 }

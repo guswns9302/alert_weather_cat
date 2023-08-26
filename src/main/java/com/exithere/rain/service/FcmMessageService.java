@@ -97,31 +97,31 @@ public class FcmMessageService {
                     String body = "";
                     if (today.getSkyIcon().equals("1")) {
                         // 맑음
-                        title += "날씨가 맑다냥!";
+                        title += "날씨가 맑다냥";
                     } else if (today.getSkyIcon().equals("2")) {
                         // 가끔 비
-                        title += "때때로 비가 온다냥!";
+                        title += "때때로 비가 온다냥";
                     } else if (today.getSkyIcon().equals("3")) {
                         // 가끔 비/눈
-                        title += "때대로 눈비가 온다냥!";
+                        title += "때대로 눈비가 온다냥";
                     } else if (today.getSkyIcon().equals("4")) {
                         // 가끔 눈
-                        title += "때때로 눈이 온다냥!";
+                        title += "때때로 눈이 온다냥";
                     } else if (today.getSkyIcon().equals("5")) {
                         // 구름과 해
-                        title += "맑지만 구르ㅓㅁ이 많다냥!";
+                        title += "맑지만 구르ㅓㅁ이 많다냥";
                     } else if (today.getSkyIcon().equals("6")) {
                         // 비
-                        title += "비가 온다냥!";
+                        title += "비가 온다냥";
                     } else if (today.getSkyIcon().equals("7")) {
                         // 비/눈
-                        title += "눈비가 온다냥!";
+                        title += "눈비가 온다냥";
                     } else if (today.getSkyIcon().equals("8")) {
                         // 눈
-                        title += "눈이 온다냥!";
+                        title += "눈이 온다냥";
                     } else if (today.getSkyIcon().equals("9")) {
                         // 흐림
-                        title += "날씨가 흐리다냥!";
+                        title += "날씨가 흐리다냥";
                     }
 
                     if (device.getAlarmResponse().getTargetDay() == 0) {
@@ -163,14 +163,14 @@ public class FcmMessageService {
                                 dustMsg += "매우 나쁘다냥!";
                             }
                         }
-                        body = "최저 " + today.getMinTemp() + "℃ ~ 최고 " + today.getMaxTemp() + "℃에 강수확률은 " + today.getProbabilityOfPrecipitation() + "%다냥!\r\n" + dustMsg;
+                        body = "최저 " + today.getMinTemp() + "℃ ~ 최고 " + today.getMaxTemp() + "℃에 강수확률은 " + today.getProbabilityOfPrecipitation() + "%다냥\r\n" + dustMsg;
                         alarmHistoryRepository.save(AlarmHistory.builder()
                                 .deviceId(device.getDeviceId())
                                 .regionName(device.getSelectRegion().getRegionName())
                                 .pushDateTime(LocalDateTime.now())
                                 .title(title)
                                 .pushType(0)
-                                .temp(today.getMinTemp() + "℃ ~ " + today.getMaxTemp())
+                                .temp(today.getMinTemp() + "℃ ~ " + today.getMaxTemp() + "℃")
                                 .pop(Integer.parseInt(today.getProbabilityOfPrecipitation()))
                                 .dust(forecastResponse.getFindDust())
                                 .ultraDust(forecastResponse.getUltraFineDust())
@@ -223,7 +223,7 @@ public class FcmMessageService {
                                 .pushDateTime(LocalDateTime.now())
                                 .title(title)
                                 .pushType(0)
-                                .temp(tomorrow.getMinTemp() + "℃ ~ " + tomorrow.getMaxTemp())
+                                .temp(tomorrow.getMinTemp() + "℃ ~ " + tomorrow.getMaxTemp() + "℃")
                                 .pop(Integer.parseInt(tomorrow.getProbabilityOfPrecipitation()))
                                 .dust(tomorrowDust.get("findDust"))
                                 .ultraDust(tomorrowDust.get("ultraFineDust"))
@@ -319,30 +319,30 @@ public class FcmMessageService {
                         // 미먼 초미먼 나쁨일때
                         if (device.getAlarmResponse().getTargetDay() == 0) {
                             if (forecastResponse.getFindDust().equals("나쁨") && !forecastResponse.getUltraFineDust().equals("나쁨")) {
-                                title += "오늘은 미세먼지가 나쁘다냥!";
+                                title += "오늘은 미세먼지가 나쁘다냥";
                                 body += "미세먼지가 나쁘다냥! 마스크를 챙겨라옹!";
                                 dust = "나쁨";
                             } else if (forecastResponse.getUltraFineDust().equals("나쁨") && !forecastResponse.getFindDust().equals("나쁨")) {
-                                title += "오늘은 초미세먼지가 나쁘다냥!";
+                                title += "오늘은 초미세먼지가 나쁘다냥";
                                 body += "초미세먼지가 나쁘다냥! 마스크를 챙겨라옹!";
                                 ultraDust = "나쁨";
                             } else if (forecastResponse.getFindDust().equals("나쁨") && forecastResponse.getUltraFineDust().equals("나쁨")) {
-                                title += "오늘은 미세먼지와 초미세먼지가 나쁘다냥!";
-                                body += "미세먼지와 초미세먼지가 나쁘다냥! 마스크를 챙겨라옹!";
+                                title += "오늘은 미세먼지와 초미세먼지가 나쁘다냥";
+                                body += "미세먼지와 초미세먼지가 나쁘다냥! 마스크를 챙겨라옹";
                                 dust = "나쁨";
                                 ultraDust = "나쁨";
                             }
                         } else if (device.getAlarmResponse().getTargetDay() == 1) {
                             if (tomorrowDust.get("findDust").equals("나쁨") && !tomorrowDust.get("ultraFineDust").equals("나쁨")) {
-                                title += "내일은 미세먼지가 나쁘다냥!";
+                                title += "내일은 미세먼지가 나쁘다냥";
                                 body += "미세먼지가 나쁘다냥! 마스크를 챙겨라옹!";
                                 dust = "나쁨";
                             } else if (tomorrowDust.get("ultraFineDust").equals("나쁨") && !tomorrowDust.get("findDust").equals("나쁨")) {
-                                title += "내일은 초미세먼지가 나쁘다냥!";
+                                title += "내일은 초미세먼지가 나쁘다냥";
                                 body += "초미세먼지가 나쁘다냥! 마스크를 챙겨라옹!";
                                 ultraDust = "나쁨";
                             } else if (tomorrowDust.get("findDust").equals("나쁨") && tomorrowDust.get("ultraFineDust").equals("나쁨")) {
-                                title += "내일은 미세먼지와 초미세먼지가 나쁘다냥!";
+                                title += "내일은 미세먼지와 초미세먼지가 나쁘다냥";
                                 body += "미세먼지와 초미세먼지가 나쁘다냥! 마스크를 챙겨라옹!";
                                 dust = "나쁨";
                                 ultraDust = "나쁨";

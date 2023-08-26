@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
@@ -212,5 +214,11 @@ public class DustForecastService {
                 }
             }
         }
+    }
+
+    @Transactional
+    public void deleteData(LocalDate now_before4, LocalDate now_before4_week){
+        List<DustForecast> oldData = dustRepository.findAllByForecastDateBetweenOrderByForecastDateAsc(LocalDateTime.of(now_before4_week, LocalTime.of(0,0,0)), LocalDateTime.of(now_before4, LocalTime.of(23,59,59)));
+        dustRepository.deleteAll(oldData);
     }
 }

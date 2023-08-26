@@ -47,11 +47,11 @@ public class LoggingAspect {
             return  result;
         }
         finally {
-            log.debug("-------------------------------------------------");
-            log.debug("request url : {}", getRequestUrl(joinPoint, cls));
-            log.debug("parameters : {}", params(joinPoint));
-            log.debug("response : {}", result);
-            log.debug("-------------------------------------------------");
+            log.info("-------------------------------------------------");
+            log.info("request url : {}", getRequestUrl(joinPoint, cls));
+            log.info("parameters : {}", params(joinPoint));
+            log.info("response : {}", result.toString());
+            log.info("-------------------------------------------------");
         }
     }
 

@@ -13,4 +13,6 @@ public interface DustRepository extends JpaRepository<DustForecast, Long> {
     Optional<DustForecast> findByForecastDateAndDustTypeOrderByDustIdAsc(LocalDate forecastDate, String dustType);
 
     List<DustForecast> findByForecastDateOrderByDustIdAsc(LocalDate now);
+
+    List<DustForecast> findAllByForecastDateBetweenOrderByForecastDateAsc(LocalDateTime fromLDT, LocalDateTime toLDT);
 }

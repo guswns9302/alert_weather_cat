@@ -66,6 +66,10 @@ public class FcstService {
 
         ForecastResponse forecastResponse = new ForecastResponse();
         forecastResponse.setRegion(getRegion);
+
+        LocalDate dateNow = LocalDate.now();
+        String apiCallBaseTime = dateNow.getMonth() + "월 " + dateNow.getDayOfMonth() + "일 " + shortForecastList.get(0).getBaseTime().substring(0,2) + "시";
+        forecastResponse.setBaseTime(apiCallBaseTime);
         forecastResponse.setCurrentTemp(shortForecastList.get(0).getHourTemp());
         forecastResponse.setHumidity(shortForecastList.get(0).getHumidity());
         forecastResponse.setTwentyFourHoursForecastResponseList(list_24);
@@ -73,6 +77,7 @@ public class FcstService {
         // 주간 날씨 조회
         WeekForecastResponse weekForecastResponse = weekForecastService.weekForecast(getRegion.getRegionName());
         if(weekForecastResponse.getForecastDate() != null){
+            log.info("주간 날씨 정보 조회 성공 !! regionName : {}", getRegion.getRegionName());
             // 일 최고 최저 기온 찾기
             LocalDateTime today = LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(), LocalDateTime.now().getDayOfMonth(), 0, 0,0);
             LocalDateTime tomorrow = today.plusDays(3);
@@ -82,6 +87,7 @@ public class FcstService {
                 if(forecast.getMaxTemp() != null){
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
                         forecastResponse.setMaxTemp(forecast.getMaxTemp());
+                        forecastResponse.setMaxTempIcon(forecast.getSkyIcon());
                         weekForecastResponse.getZero().setMaxTemp(forecast.getMaxTemp());
                     }
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))){
@@ -95,6 +101,7 @@ public class FcstService {
                 if(forecast.getMinTemp() != null){
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now())){
                         forecastResponse.setMinTemp(forecast.getMinTemp());
+                        forecastResponse.setMinTempIcon(forecast.getSkyIcon());
                         weekForecastResponse.getZero().setMinTemp(forecast.getMinTemp());
                     }
                     if(forecast.getForecastDateTime().toLocalDate().equals(LocalDate.now().plusDays(1))){
@@ -141,6 +148,9 @@ public class FcstService {
                 forecastResponse.setWeekForecastResponse(weekForecastResponse);
             }
         }
+        else{
+            log.error("주간 날씨 정보 조회 실패...! regionName : {}", getRegion.getRegionName());
+        }
 
         // 미세먼지 추가
         Map<String, String> dustForecast = dustForecastService.getDust(getRegion.getRegionName(), LocalDate.now());
@@ -150,6 +160,7 @@ public class FcstService {
         // 알람 이력 조회
         List<AlarmHistory> alarmHistoryList = alarmHistoryRepository.findByDeviceIdOrderByPushDateTimeDesc(deviceId);
         forecastResponse.setAlarmList(alarmHistoryList);
+
         return forecastResponse;
     }
 
@@ -476,18 +487,8 @@ public class FcstService {
     }
 
     @Transactional
-    public void deleteData(){
-        LocalDate now = LocalDate.now();
-        // 1일 전
-        LocalDate now_before4 = now.minusDays(1);
-
-        // 1일 전의 1주 전
-        LocalDate now_before4_week = now_before4.minusWeeks(1);
-
-        log.info("OLD FORECAST DATA DELETE -- from : {} | to : {}", now_before4_week, now_before4);
-
+    public void deleteData(LocalDate now_before4, LocalDate now_before4_week){
         List<ShortForecast> oldData = shortForecastRepository.findAllByForecastDateTimeBetweenOrderByForecastDateTimeAsc(LocalDateTime.of(now_before4_week, LocalTime.of(0,0,0)), LocalDateTime.of(now_before4, LocalTime.of(23,59,59)));
-
         shortForecastRepository.deleteAll(oldData);
     }
 }
