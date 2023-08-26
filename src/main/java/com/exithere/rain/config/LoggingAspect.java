@@ -50,7 +50,7 @@ public class LoggingAspect {
             log.info("-------------------------------------------------");
             log.info("request url : {}", getRequestUrl(joinPoint, cls));
             log.info("parameters : {}", params(joinPoint));
-            log.info("response : {}", result.toString());
+            log.info("response : {}", result);
             log.info("-------------------------------------------------");
         }
     }
