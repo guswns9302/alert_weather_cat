@@ -31,10 +31,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,7 +52,8 @@ public class FcstService {
         Region getRegion = regionService.findByRegionId(regionId);
 
         // db에 해당 지역의 예보 정보가 있는지 확인 없으면 기상청 api 호출해서 데이터 저장
-        this.requestFcst(getRegion);
+        this.requestFcst(getRegion, true);
+        this.requestFcst(getRegion, false);
         List<ShortForecast> shortForecastList = this.getFcstFromDB(getRegion);
 
         // 24시간 예보 응답 만들기
@@ -111,16 +109,6 @@ public class FcstService {
                     }
                 }
             }
-
-//            if(forecastResponse.getMaxTemp() == null){
-//                forecastResponse.setMaxTemp(weekForecastResponse.getOne().getMaxTemp());
-//                forecastResponse.setMaxTempIcon();
-//                weekForecastResponse.getZero().setMaxTemp(weekForecastResponse.getOne().getMaxTemp());
-//            }
-//            if(forecastResponse.getMinTemp() == null){
-//                forecastResponse.setMinTemp(weekForecastResponse.getOne().getMinTemp());
-//                weekForecastResponse.getZero().setMinTemp(weekForecastResponse.getOne().getMinTemp());
-//            }
 
             // 주간 강수량 조회
             List<ShortForecast> ofToday = findTodayForecast.stream().filter(i -> i.getForecastDateTime().toLocalDate().equals(LocalDate.now())).collect(Collectors.toList());
@@ -238,14 +226,30 @@ public class FcstService {
         return shortForecastList;
     }
 
-    private void requestFcst(Region region){
+    private void requestFcst(Region region, boolean flag){
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         headers.add(HttpHeaders.ACCEPT_CHARSET, StandardCharsets.UTF_8.toString());
 
         LocalDateTime ldt = LocalDateTime.now(); // 현재 시각
-        Map<String, String> base = this.getBaseDateTime(ldt);
+        /*
+            flag = true
+            --> default baseTime 0200
+
+            flag = false
+            --> baseTime check
+         */
+        Map<String, String> base = new HashMap<>();
+        if(flag){
+            base.put("baseDate", ldt.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+            base.put("baseTime", "0200");
+        }
+        else{
+            base.putAll(this.getBaseDateTime(ldt));
+        }
+
+        //Map<String, String> base = this.getBaseDateTime(ldt);
 
         LocalDateTime findTime;
         if(ldt.getHour() + 1 > 23){
