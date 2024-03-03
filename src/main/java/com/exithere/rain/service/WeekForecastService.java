@@ -78,6 +78,7 @@ public class WeekForecastService {
             urlBuilder.append("&regId=").append(regionCode); /*지역 id*/
             urlBuilder.append("&tmFc=").append(baseTime); /*‘21년 6월 28일 발표*/
 
+            log.debug("----------> regId : {}", regionCode);
             ResponseEntity<MidTa> response = restUtils.get(URI.create(urlBuilder.toString()), headers, MidTa.class);
 
             if (response.getStatusCode() != HttpStatus.OK || response.getBody() == null) {
@@ -86,7 +87,8 @@ public class WeekForecastService {
                 MidTa midTa = response.getBody();
                 if (midTa != null) {
                     if (!"00".equals(midTa.getResponse().getHeader().resultCode)) {
-                        throw new CustomException(ErrorCode.OPEN_API_ERROR);
+                        //throw new CustomException(ErrorCode.OPEN_API_ERROR);
+                        log.error("");
                     } else {
                         Item item = midTa.getResponse().getBody().getItems().getItem().get(0);
 

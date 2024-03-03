@@ -52,7 +52,7 @@ public class StaticSchedule {
     @Scheduled(cron = "0 10 6 * * *")
     public void week06(){
         log.info("주간 최고 최저 기온 정보 조회 06시 - {}", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(6,00).format(DateTimeFormatter.ofPattern("HHmm"));
+        String baseTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + LocalTime.of(06,00).format(DateTimeFormatter.ofPattern("HHmm"));
         int count = 0;
         while (count < 5){
             try {
