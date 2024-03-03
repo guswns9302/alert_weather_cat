@@ -83,7 +83,8 @@ public class WeekPopForecastService {
                 MidLand midLand = response.getBody();
                 if(midLand != null){
                     if (!"00".equals(midLand.getResponse().getHeader().resultCode)) {
-                        throw new CustomException(ErrorCode.OPEN_API_ERROR);
+                        //throw new CustomException(ErrorCode.OPEN_API_ERROR);
+                        log.error("week pop error : {}", regionCode);
                     }
                     else{
                         Item item = midLand.getResponse().getBody().getItems().getItem().get(0);

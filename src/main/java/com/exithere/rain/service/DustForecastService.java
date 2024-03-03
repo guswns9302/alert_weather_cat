@@ -8,6 +8,7 @@ import com.exithere.rain.exception.ErrorCode;
 import com.exithere.rain.repository.DustRepository;
 import com.exithere.rain.util.RestUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,6 +29,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DustForecastService {
 
     private final DustRepository dustRepository;
@@ -160,7 +162,8 @@ public class DustForecastService {
             DustFrcst dustFrcst = response.getBody();
             if(dustFrcst != null){
                 if (!"00".equals(dustFrcst.getResponse().getHeader().resultCode)) {
-                    throw new CustomException(ErrorCode.OPEN_API_ERROR);
+                    //throw new CustomException(ErrorCode.OPEN_API_ERROR);
+                    log.error("Dust Error");
                 }
                 else{
                     List<Items> itemList = dustFrcst.getResponse().getBody().getItems();

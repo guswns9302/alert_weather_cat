@@ -88,7 +88,7 @@ public class WeekForecastService {
                 if (midTa != null) {
                     if (!"00".equals(midTa.getResponse().getHeader().resultCode)) {
                         //throw new CustomException(ErrorCode.OPEN_API_ERROR);
-                        log.error("");
+                        log.error("week forecast error : {}", regionCode);
                     } else {
                         Item item = midTa.getResponse().getBody().getItems().getItem().get(0);
 
