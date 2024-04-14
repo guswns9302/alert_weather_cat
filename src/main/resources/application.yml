@@ -48,8 +48,8 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/rain_dev
-    username: yunhyunjun
+    url: jdbc:postgresql://localhost:5432/awc
+    username: postgres
     password:
     connection-timeout: 3000
     maximum-pool-size: 50
