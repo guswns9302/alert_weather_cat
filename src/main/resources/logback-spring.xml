@@ -2,7 +2,7 @@
 <configuration>
     <include resource="log/console.xml" />
     <include resource="log/file.xml" />
-    <root level="info">
+    <root level="debug">
         <springProfile name="local">
             <appender-ref ref="CONSOLE_APPENDER"/>
         </springProfile>
