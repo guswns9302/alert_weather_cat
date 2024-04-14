@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE xml>
 <appender name="FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-<file>/home/ubuntu/awc/log/current.log</file>
+<file>/home/awc/log/current.log</file>
 <!--<file>/Users/yunhyunjun/dev/exithere/alert_weather_cat/log/current.log</file>-->
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-        <fileNamePattern>/home/ubuntu/awc/log/old/%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+        <fileNamePattern>/home/awc/log/old/%d{yyyy-MM-dd}-%i.log</fileNamePattern>
         <maxFileSize>50MB</maxFileSize>
         <maxHistory>30</maxHistory>
         <totalSizeCap>1GB</totalSizeCap>
