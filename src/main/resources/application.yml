@@ -36,6 +36,26 @@ spring:
     activate:
       on-profile: "prod"
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+      globally_quoted_identifiers: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 1000
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/rain_dev
+    username: yunhyunjun
+    password:
+    connection-timeout: 3000
+    maximum-pool-size: 50
+    minimum-idle: 10
+    idle-timeout: 60000
+
 logging:
   level:
     root: info
