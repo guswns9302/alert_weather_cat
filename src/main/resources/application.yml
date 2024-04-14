@@ -50,7 +50,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/awc
     username: postgres
-    password:
+    password: postgres
     connection-timeout: 3000
     maximum-pool-size: 50
     minimum-idle: 10
