@@ -49,8 +49,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/awc
-    username: postgres
-    password: postgres
+    username: exithere
+    password: exithere
     connection-timeout: 3000
     maximum-pool-size: 50
     minimum-idle: 10
