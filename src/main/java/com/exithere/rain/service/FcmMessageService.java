@@ -394,12 +394,13 @@ public class FcmMessageService {
 
     // fcm accessToken 할당
     private String getAccessToken () throws IOException {
+        log.info("getAccessToke run");
         String firebaseConfigPath = "firebase/firebase_service_key.json";
         GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
                 .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
 
         googleCredentials.refreshIfExpired();
-
+        log.info("getAccessToke finish");
         return googleCredentials.getAccessToken().getTokenValue();
     }
 
@@ -422,7 +423,7 @@ public class FcmMessageService {
         // fcm message 전송
     private void sendMessage (String targetToken, String title, String body) throws IOException {
         String message = this.makeMessage(targetToken, title, body);
-
+        log.info("message rum : {}", message);
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
         Request request = new Request.Builder()
