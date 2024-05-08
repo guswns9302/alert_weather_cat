@@ -2,7 +2,7 @@ spring:
   profiles:
     group:
       "dev": "dev, common"
-      "prod": "prod, common"
+      "prod": "prod, common, awsPostgres"
 ---
 spring:
   config:
@@ -45,16 +45,6 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 1000
-
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/awc
-    username: exithere
-    password: exithere
-    connection-timeout: 3000
-    maximum-pool-size: 50
-    minimum-idle: 10
-    idle-timeout: 60000
 
 logging:
   level:
