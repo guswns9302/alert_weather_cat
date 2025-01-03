@@ -26,10 +26,6 @@ https://www.notion.so/exit-here/d598e38889a248c59318f3c431833eae
 ## Architecture
 ![image](https://github.com/guswns9302/alert_weather_cat/assets/87797716/c5f57fbd-a498-4533-8e63-3664f935bb8d)
 
-## ERD
-
-
-
 ## 주요 기능
 ### 1. Firebase push
 <img src="https://github.com/guswns9302/alert_weather_cat/assets/87797716/f8108a36-c07f-4fef-99ee-8777845f9c7c" width="50%"></img>
