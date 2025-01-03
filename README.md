@@ -65,7 +65,5 @@ https://www.notion.so/exit-here/d598e38889a248c59318f3c431833eae
 > 4. 제공되는 행정구역별 격자 x,y 좌표를 키로 행정구역 이름을 매칭시켜서 중복 요청을 제거하여 API 트래픽을 제거한다. 
 
 ## 아쉬운 점
-- 
-
-# API
-https://awc.teamexithere.com/swagger-ui/index.html
+- 기획 단계에서 시장조사 시 나왔던 예상 사용량에 한참 못미쳐 아쉽다.
+- 그로 인해 서비스 종료로 결정이 났다.
